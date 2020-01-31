@@ -1,0 +1,166 @@
+###############################################################################
+#  ______                  _          _  __          ___               _      #
+# |  ____|                (_)        | | \ \        / / |             | |     #
+# | |__ _ __ ___ _ __  _____  ___  __| |  \ \  /\  / /| |__   ___  ___| |___  #
+# |  __| '__/ _ \ '_ \|_  / |/ _ \/ _` |   \ \/  \/ / | '_ \ / _ \/ _ \ / __| #
+# | |  | | |  __/ | | |/ /| |  __/ (_| |    \  /\  /  | | | |  __/  __/ \__ \ #
+# |_|  |_|  \___|_| |_/___|_|\___|\__,_|     \/  \/   |_| |_|\___|\___|_|___/ #
+#                                                                             #
+###############################################################################                                                                            
+
+			Génération de mesh à partir de splines
+
+-- Release Notes --
+
+----------------------------------------
+
+Sommaire
+
+I - Instructions (explication du jeu)
+
+II - Remarques et bugs connus
+
+III - Analyse technique
+
+IV - Assets et éléments utilisés
+
+V - Rôles dans ce projet
+
+Conclusion
+
+----------------------------------------
+
+
+I - Instructions (explication du jeu)
+
+Inspiré du jeu Horizon Chase, l'objectif dans Frenzied Wheels est le même.
+
+On a 1 joueur et jusqu'à 19 adversaires (IA). Le joueur doit faire le nombre
+de tours indiqué et tenter de finir premier.
+
+Le joueur doit appuyer sur la touche haut pour accélérer et la touche bas pour 
+décélérer. Il peut également s'orienter horizontalement avec les touches gauche et droite.
+
+Voici les touches tout au long du jeu :
+
+ - les touches wasd (zqsd sur un clavier azerty) mais aussi les flèches directionnelles
+   (haut,bas,gauche et droite) pour se déplacer
+
+Si le joueur ne termine pas premier, il perd (pour le moment).
+
+-- Non Fonctionnel --
+
+Intelligence artificielle des concurrents.
+
+
+II - Remarques, bugs connus, améliorations possibles
+
+-- Remarques
+
+Pour le moment le mode multijoueur online et local ne fonctionne pas.
+
+J'ai voulu utiliser une matrice dans un premier temps pour repérer les
+éléments du jeu, mais au final j'ai préférer utiliser les raycasts afin de
+ne pas à avoir à actualiser cette matrice dans tous mes objets et d'expérimenter
+cette façon de repérer des éléments.
+
+-- Bugs connus
+
+-- Améliorations possibles
+
+ - programmer une IA fonctionnelle pour le joueur adverse
+ - terminer l'implémentation du multijoueur avec Photon Bolt
+ - implémenter un multijoueur local fonctionnel (je n'avais pas de manette...)
+
+
+III - Analyse technique
+
+Le but de ce projet était de travailler sur la génération de mesh (ici notre route) à partir d'une spline.
+Je me suis d'abord renseigné sur les représentations mathématiques possibles d'une spline.
+
+Je suis tombé sur les courbes de Bézier cubiques, qui nécéssitent quatre points de contrôle, pour être tracées.
+Le traçage est déterminé par la droite (P1P2) qui est tangente à la courbe.
+
+La suite de ces quatres points constituent le polygône de contrôle de Bézier pour n = 3.
+La représentation paramétrique des courbes de Bézier est une somme de chaque point de contrôle 
+multiplié par le polynôme de Bernstein au degré correspondant.
+
+Mon objectif étant de tracer une route complète à l'aide de splines, 
+ma courbe nécessitait de nombreux points de contrôle.
+Plutôt que de tracer des courbes de Bézier à un degré élevé (temps de calcul important),
+j'ai préféré m'orienter vers l'usage de B-splines, généralisant l'usage des courbes de Bézier.
+
+En effet, on peut décomposer une courbe spline en une suite de B-splines mises bout à bout.
+
+Je me suis servi des liens suivant pour cette approche :
+https://fr.wikipedia.org/wiki/B-spline
+https://www.irif.fr/~carton/Enseignement/InterfacesGraphiques/MasterInfo/Cours/Swing/splines.html
+
+
+Difficulté UV maps et virages
+
+IV - Assets et éléments utilisés
+
+Pour ce projet, je me suis servi de (ou j'ai modifié) : 
+
+ - assets venant de l'Assets Store d'Unity (formes basiques) : gratuits tout comme Unity
+   si on fait des profits en dessous de 100 000$ par an 
+   licence : Unity Terms of Service.
+   - "Mobile depth water shader" by ValakhP
+
+ - effets graphiques :
+  - "Shooty Skies Style Explosion" by James Heazlewood, tuto sur youtube.com
+
+ - musiques trouvées sur : Opengameart.org
+  - "Puzzle Tune 1" by rezoner licensed CC-BY 3.0
+  - "Desert Theme" by yd licensed CC0
+  - "Crystal Cave + Mysterious Ambience (seamless loop)" by
+  	cynicmusic licensed CC-BY 3.0, CC-BY-SA 3.0, GPL 3.0
+  - "Through Space" by maxstack licensed CC-BY-SA 3.0
+
+ - effets sonores trouvés sur : Opengameart.com
+  - "8-Bit Sound Effects Library" by Little Robot Sound Factory licensed CC-BY 3.0
+  - "bomb_explosion_8bit" by Luke.RUSTLTD licensed CC0
+
+ - Je comptais utiliser Photon Bolt pour ce projet mais je l'ai retiré car le mode
+   multijoueur n'a pas été implémenté.
+
+ - Bouton de l'UI fait sous Gimp.
+
+ - modèles faits sous VoxEdit
+
+ - sons modifiés avec Audacity
+
+ - assets graphiques pour les backgrounds :
+  - sur Opengameart.com :
+   - "Simple Seamless tiles of dirt and sand" by LuminousDragonGames licensed CC0
+  - sur forums.rpgmakerweb.com :
+   - "Free Candy theme tileset" by Lemori licensed CC0
+
+
+V - Rôles dans ce projet
+
+Dans ce projet je me suis focalisé sur les rôles suivants :
+
+ - Gameplay Developer
+ - Game/Level designer
+
+
+Conclusion
+
+
+Ce projet fut très intéressant pour mettre en pratique ce qu'on a appris
+sur Unity.
+
+Être seul à finalement jouer en ma défaveur puisque je suis en retard dans
+la livraison du projet et que je me rend compte que tout le monde s'est 
+beaucoup investit, ce qui change par rapport à d'autre projets.
+
+Cependant, cela m'a permis de bien comprendre qu'il y a différents rôles dans 
+création d'un jeu et qu'on ne peut pas tout endosser.
+
+De plus il faut apprendre à lâcher prise sur ce qu'on ne peut pas faire dans un
+temps donné.
+
+Je constate donc que c'est un bon entraînement pour la GameJam de l'année prochaine,
+au cours de laquelle il faudra faire beaucoup dans un temps bien plus court.
