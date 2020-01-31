@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6405588741728323330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2414811247742892531}
+  - component: {fileID: 4641629141296826279}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2414811247742892531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6405588741728323330}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7661702719841793576}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4641629141296826279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6405588741728323330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43250bf40e10e7458757a3377d8173a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0.11649261, y: 0, z: 0.0023897698}
+  - {x: 0.29391983, y: 0, z: -0.0011946369}
+  - {x: 0.44625628, y: 0, z: -0.0011946369}
+  - {x: 0.5573723, y: 0, z: -0.0011946369}
+  - {x: 0.67923564, y: 0, z: -0.03985504}
+  - {x: 0.7199389, y: 0, z: -0.1072698}
+  - {x: 0.7262987, y: 0, z: -0.20266807}
+  - {x: 0.70213115, y: 0, z: -0.31078607}
+  - {x: 0.53931814, y: 0, z: -0.40364036}
+  - {x: 0.2632992, y: 0, z: -0.4125442}
+  - {x: 0.11193397, y: 0, z: -0.41381618}
+  - {x: -0.06359885, y: 0, z: -0.41000023}
+  - {x: -0.27474698, y: 0, z: -0.3578492}
+  - {x: -0.35742545, y: 0, z: -0.28153062}
+  - {x: -0.36251336, y: 0, z: -0.14542912}
+  - {x: -0.22768384, y: 0, z: -0.075470366}
+  - {x: 0, y: 0, z: 0}
+  modes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!1 &7661702719841793577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7661702719841793576}
+  - component: {fileID: 7661702719841793575}
+  m_Layer: 0
+  m_Name: Circuit2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7661702719841793576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7661702719841793577}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2414811247742892531}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7661702719841793575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7661702719841793577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66797b166643ec49be61af317c54968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelBaseSpline: {fileID: 4641629141296826279}
+  roadTexture: {fileID: 2800000, guid: f3cebdc9a4d4a784a877d432255db3cd, type: 3}
+  groundTexture: {fileID: 2800000, guid: 7f16c20542c69e748b526eaf742931ff, type: 3}
+  carPrefabs:
+  - {fileID: 4410329865113057374, guid: 94bce720f3a34ce4e8cf42cdc9b5efc3, type: 3}
+  bonusPrefabs: []
+  turnSignPrefab: {fileID: 0}

@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1701121281579966278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1701121281579966279}
+  - component: {fileID: 1701121281579966280}
+  m_Layer: 0
+  m_Name: Circuit1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1701121281579966279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701121281579966278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6857364137637441427}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1701121281579966280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701121281579966278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66797b166643ec49be61af317c54968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelBaseSpline: {fileID: 8682401219589218766}
+  roadMaterial: {fileID: 2100000, guid: 07384198cc2f0a84a8f9bfb56f26fa9f, type: 2}
+  groundMaterial: {fileID: 2100000, guid: c4686d439756ab7428f3e54a59856c13, type: 2}
+  MaxLaps: 3
+  numberOfOpponents: 19
+  carPrefabs:
+  - {fileID: 4909186694630486797, guid: 0a897456c10d75e45983d6a79c9fc912, type: 3}
+  bonusPrefabs: []
+  finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
+    type: 3}
+  turnSignPrefab: {fileID: 0}
+--- !u!1 &6059438929267593366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6857364137637441427}
+  - component: {fileID: 8682401219589218766}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6857364137637441427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059438929267593366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1701121281579966279}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8682401219589218766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059438929267593366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43250bf40e10e7458757a3377d8173a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {x: 0, y: 0, z: 0.075169936}
+  - {x: 0, y: 0, z: 12.822415}
+  - {x: -0.79513717, y: 0, z: 31.805874}
+  - {x: -0.79513717, y: 0, z: 52.47964}
+  - {x: -2.3854425, y: 0, z: 69.972824}
+  - {x: -1.5902743, y: 0, z: 97.80287}
+  - {x: -0.79513717, y: 0, z: 125.632935}
+  - {x: -0.79513717, y: 0, z: 147.10182}
+  - {x: -1.5902743, y: 0, z: 165.39015}
+  - {x: 5.565991, y: 0, z: 179.70274}
+  - {x: 21.46892, y: 0, z: 189.24448}
+  - {x: 42.142673, y: 0, z: 192.42505}
+  - {x: 63.61153, y: 0, z: 193.2202}
+  - {x: 83.49017, y: -1.7384796, z: 193.2202}
+  - {x: 102.573654, y: -4.6359634, z: 193.2202}
+  - {x: 119.27169, y: -7.6783066, z: 193.2202}
+  - {x: 134.3794, y: -8.982174, z: 193.2202}
+  - {x: 155.84831, y: -8.982159, z: 193.2202}
+  - {x: 170.1609, y: -9.271904, z: 193.2202}
+  - {x: 193.2201, y: -9.271904, z: 193.2202}
+  - {x: 221.05017, y: -2.4628525, z: 192.42505}
+  - {x: 244.90448, y: 0, z: 190.83476}
+  - {x: 253.65108, y: 0, z: 189.24448}
+  - {x: 260.01224, y: 0, z: 186.06389}
+  - {x: 270.34912, y: 0, z: 179.70274}
+  - {x: 282.27628, y: 0, z: 165.39015}
+  - {x: 289.4326, y: 0, z: 151.07755}
+  - {x: 294.9986, y: 0, z: 136.76494}
+  - {x: 294.9986, y: 0, z: 112.91062}
+  - {x: 297.38403, y: -5.070591, z: 84.28541}
+  - {x: 297.38403, y: -5.070587, z: 62.021378}
+  - {x: 297.38403, y: -5.070587, z: 40.552467}
+  - {x: 297.38403, y: -4.9256744, z: 22.264162}
+  - {x: 296.58887, y: -4.394806, z: 0.00010955334}
+  - {x: 295.79376, y: -4.394806, z: -19.878498}
+  - {x: 294.9986, y: 0, z: -41.347393}
+  - {x: 296.58887, y: 0, z: -58.045433}
+  - {x: 294.9986, y: 0, z: -75.5386}
+  - {x: 295.79376, y: 0, z: -92.236626}
+  - {x: 294.9986, y: 0, z: -106.54923}
+  - {x: 288.63742, y: 0, z: -116.09097}
+  - {x: 272.73456, y: 0, z: -122.45212}
+  - {x: 248.88019, y: 0, z: -126.42784}
+  - {x: 237.74821, y: 0, z: -127.222984}
+  - {x: 215.48412, y: 0, z: -129.60841}
+  - {x: 203.55698, y: 0, z: -133.58414}
+  - {x: 190.83466, y: 0, z: -148.69188}
+  - {x: 184.4735, y: 0, z: -164.59477}
+  - {x: 182.08806, y: 0, z: -180.49765}
+  - {x: 175.72693, y: 0, z: -190.0394}
+  - {x: 165.39001, y: 0, z: -194.81024}
+  - {x: 135.96973, y: 0, z: -197.19568}
+  - {x: 112.91053, y: 0, z: -197.19568}
+  - {x: 85.08045, y: 0, z: -193.21996}
+  - {x: 62.816425, y: 0, z: -193.21996}
+  - {x: 27.83008, y: 0, z: -193.21996}
+  - {x: 12.722319, y: 0, z: -193.21996}
+  - {x: 0.79516816, y: 0, z: -178.90736}
+  - {x: -2.3854425, y: 0, z: -166.18506}
+  - {x: -2.3854246, y: 0, z: -147.89673}
+  - {x: -1.5902872, y: 0, z: -130.40355}
+  - {x: -0.7951155, y: 0, z: -99.39293}
+  - {x: 0.35193086, y: 0, z: -62.02112}
+  - {x: 0.35193086, y: 0, z: -37.371647}
+  - {x: 0, y: 0, z: -3.2520938}
+  - {x: 0, y: 0, z: 0.14256276}
+  modes: 01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000
