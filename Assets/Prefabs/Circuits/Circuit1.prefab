@@ -50,7 +50,7 @@ MonoBehaviour:
   MaxLaps: 3
   numberOfOpponents: 19
   carPrefabs:
-  - {fileID: 4909186694630486797, guid: 0a897456c10d75e45983d6a79c9fc912, type: 3}
+  - {fileID: 4410329865113057374, guid: 94bce720f3a34ce4e8cf42cdc9b5efc3, type: 3}
   bonusPrefabs: []
   finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
     type: 3}

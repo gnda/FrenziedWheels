@@ -92,7 +92,6 @@ public class Circuit : MonoBehaviour, IEventHandler
         //Add player
         GameObject playerGO = Instantiate(carPrefabs[0], playerStartPosition, 
             Quaternion.identity, carsGO.transform);
-        playerGO.transform.Rotate(-90,0,0);
         playerGO.AddComponent<Player>();
         playerGO.AddComponent<PlayerController>();
         playerGO.AddComponent<Racer>();
@@ -111,9 +110,8 @@ public class Circuit : MonoBehaviour, IEventHandler
         Camera camera = FindObjectOfType<Camera>();
         Transform ct = camera.transform;
         ct.SetParent(playerGO.transform);
-        ct.localPosition = new Vector3(0,0.1f, 0.04f);
+        ct.localPosition = new Vector3(0,2f, -6.5f);
         ct.localRotation = Quaternion.identity;
-        ct.Rotate(90,0,0);
         ct.localScale = Vector3.one;
         
 
