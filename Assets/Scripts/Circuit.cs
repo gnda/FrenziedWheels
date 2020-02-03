@@ -99,9 +99,7 @@ public class Circuit : MonoBehaviour, IEventHandler
         playerGO.AddComponent<Player>();
         playerGO.AddComponent<PlayerController>();
         playerGO.AddComponent<Racer>();
-        
-        Debug.Log(startPositions.Count);
-        Debug.Log(carPrefabs.Length);
+
         //Add AI opponents
         for (int i = 0; i < GameManager.Instance.NumberOfCars - 1; i++)
         {
