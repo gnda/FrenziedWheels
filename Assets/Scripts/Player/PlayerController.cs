@@ -18,24 +18,25 @@ public class PlayerController : SimpleGameStateObserver, IEventHandler
 
 		float hInput = Input.GetAxis("Horizontal");
 		float vInput = Input.GetAxis("Vertical");
-		bool spaceBar = Input.GetButton("Jump");
 
 		if (vInput > 0f)
 		{
-			currentCar.CurrentSpeed += (currentCar.AccelerationRate * Time.deltaTime);
+			currentCar.Accelerate();
 		}
-		else
+		else if (currentCar.CurrentSpeed > 0f)
 		{
-			currentCar.CurrentSpeed -= (currentCar.DecelerationRate * Time.deltaTime);
-		}
-
-		if (vInput < 0f)
-		{
-			currentCar.CurrentSpeed -= (currentCar.DecelerationRate * Time.deltaTime * 2);
+			if (vInput < 0f)
+			{
+				currentCar.Decelerate(3f);
+			}
+			else
+			{
+				currentCar.Decelerate();
+			}
 		}
 
 		transform.Translate(0f, 0f, currentCar.CurrentSpeed * Time.deltaTime);
-		transform.Rotate( new Vector3(0,50 * hInput * Time.deltaTime,0));
+		transform.Rotate(new Vector3(0,50 * hInput * Time.deltaTime,0));
 	}
 	#endregion
 }

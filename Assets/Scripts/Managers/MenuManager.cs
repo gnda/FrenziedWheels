@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
 using UnityEngine.UI;
+using Event = SDD.Events.Event;
 
 public class MenuManager : Manager<MenuManager>
 {
@@ -18,6 +19,9 @@ public class MenuManager : Manager<MenuManager>
     
     [Header("Fields")]
     [SerializeField] Text txtVictoryPlayer;
+    [SerializeField] Text txtNumberOfCars;
+
+    public Text TxtNumberOfCars => txtNumberOfCars;
 
     [Header("Settings")]
     [SerializeField] float creditsDuration;
@@ -35,7 +39,7 @@ public class MenuManager : Manager<MenuManager>
         base.SubscribeEvents();
         
         //GameManager
-        EventManager.Instance.AddListener<GoToNextCircuitEvent>(GoToNextLevel);
+        EventManager.Instance.AddListener<GoToNextCircuitEvent>(GoToNextCircuit);
 
         //Car selection
         EventManager.Instance.AddListener<PlayButtonClickedEvent>(PlayButtonClicked);
@@ -49,7 +53,7 @@ public class MenuManager : Manager<MenuManager>
         base.UnsubscribeEvents();
         
         //GameManager
-        EventManager.Instance.RemoveListener<GoToNextCircuitEvent>(GoToNextLevel);
+        EventManager.Instance.RemoveListener<GoToNextCircuitEvent>(GoToNextCircuit);
 
         //Car selection
         EventManager.Instance.RemoveListener<PlayButtonClickedEvent>(PlayButtonClicked);
@@ -165,7 +169,7 @@ public class MenuManager : Manager<MenuManager>
         EventManager.Instance.Raise(new ResumeButtonClickedEvent());
     }
 
-    public void NextLevelButtonHasBeenClicked()
+    public void NextCircuitButtonHasBeenClicked()
     {
         EventManager.Instance.Raise(new NextCircuitButtonClickedEvent());
     }
@@ -218,7 +222,7 @@ public class MenuManager : Manager<MenuManager>
     
     
     #region Callbacks to GameManager events
-    private void GoToNextLevel(GoToNextCircuitEvent e)
+    private void GoToNextCircuit(GoToNextCircuitEvent e)
     {
         OpenPanel(null);
     }

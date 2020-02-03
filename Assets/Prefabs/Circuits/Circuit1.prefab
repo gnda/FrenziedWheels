@@ -47,10 +47,10 @@ MonoBehaviour:
   levelBaseSpline: {fileID: 8682401219589218766}
   roadMaterial: {fileID: 2100000, guid: 07384198cc2f0a84a8f9bfb56f26fa9f, type: 2}
   groundMaterial: {fileID: 2100000, guid: c4686d439756ab7428f3e54a59856c13, type: 2}
-  MaxLaps: 3
-  numberOfOpponents: 19
+  skyboxMaterial: {fileID: 2100000, guid: 1001bc62adaa0451cb40206853391b06, type: 2}
+  MaxLaps: 2
   carPrefabs:
-  - {fileID: 4410329865113057374, guid: 94bce720f3a34ce4e8cf42cdc9b5efc3, type: 3}
+  - {fileID: 6653018579779980432, guid: 546249d66864db749bb9f343df806f5f, type: 3}
   bonusPrefabs: []
   finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
     type: 3}

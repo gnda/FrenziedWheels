@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-#region GameManager Events
+﻿#region GameManager Events
 
 public class GameMenuEvent : SDD.Events.Event
 {
@@ -37,10 +35,7 @@ public class GameExitEvent : SDD.Events.Event
 
 public class GameStatisticsChangedEvent : SDD.Events.Event
 {
-    public int eBestScore { get; set; }
-    public int ePlayerNumber { get; set; }
-    public int eScore { get; set; }
-    public int eNMonstersLeft{ get; set; }
+    public int ePosition { get; set; }
 }
 
 #endregion
@@ -87,28 +82,6 @@ public class ExitButtonClickedEvent : SDD.Events.Event
 }
 #endregion
 
-#region Element Event
-public class ElementMustBeDestroyedEvent : SDD.Events.Event
-{
-    public GameObject eElement;
-}
-
-public class ElementIsBeingDestroyedEvent : SDD.Events.Event
-{
-    public GameObject eElement;
-}
-#endregion
-
-#region Score Event
-
-public class ScoreItemEvent : SDD.Events.Event
-{
-    public GameObject eElement;
-    public Player ePlayer;
-}
-
-#endregion
-
 #region Game Manager Additional Event
 public class GoToNextCircuitEvent : SDD.Events.Event
 {
@@ -122,10 +95,6 @@ public class CircuitButtonClickedEvent : SDD.Events.Event
 public class GameHasStartedEvent : SDD.Events.Event
 {
 }
-
-public class TimeIsUpEvent : SDD.Events.Event
-{
-}
 #endregion
 
 
@@ -136,6 +105,6 @@ public class CircuitHasBeenDestroyedEvent : SDD.Events.Event
 
 public class CircuitHasBeenInstantiatedEvent : SDD.Events.Event
 {
-    public Circuit ECircuit;
+    public Circuit eCircuit;
 }
 #endregion

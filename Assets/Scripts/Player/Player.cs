@@ -1,15 +1,12 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour, IScore
+public class Player : MonoBehaviour
 {
     #region Settings & Variables
     [Header("PlayerSettings")]
-    [SerializeField] private int score = 0;
-    public GameObject bombPrefab;
-    
+
     private static int playerCount = 0;
     private int playerNumber = 0;
-    private int gainedScore;
     #endregion
     
     #region Player methods
@@ -25,20 +22,7 @@ public class Player : MonoBehaviour, IScore
         set => playerNumber = value;
     }
     #endregion
-    
-    #region Score
-    public int Score
-    {
-        get { return score; }
-    }
-    
-    public int GainedScore
-    {
-        get => gainedScore;
-        set => gainedScore = value;
-    }
-    #endregion
-    
+
     #region MonoBehaviour lifecycle
     private void Start()
     {

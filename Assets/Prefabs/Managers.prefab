@@ -128,9 +128,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DoNotDestroyGameObjectOnLoad: 0
   m_Clips:
-  - {fileID: 8300000, guid: 18fc0e399ffc63641b8c4cb50030cd6c, type: 3}
-  - {fileID: 8300000, guid: 225237505bd2d08448e734986949ab5a, type: 3}
-  m_FadeDuration: 1
+  - {fileID: 8300000, guid: def970173a0c0ce47a5722a1078349df, type: 3}
+  - {fileID: 8300000, guid: 44a4a41c07c974c4aac86b28cf956b84, type: 3}
+  - {fileID: 8300000, guid: a7d2ad6a518c5744797a714e24b59549, type: 3}
+  - {fileID: 8300000, guid: e6977b37dcfe010419dfcba4d37a80b0, type: 3}
+  m_FadeDuration: 0.3
   m_ShowGui: 0
 --- !u!82 &82776825790400010
 AudioSource:
@@ -424,7 +426,8 @@ MonoBehaviour:
   panelGameOver: {fileID: 0}
   panelCredits: {fileID: 0}
   txtVictoryPlayer: {fileID: 0}
-  creditsDuration: 10
+  txtNumberOfCars: {fileID: 0}
+  creditsDuration: 7
 --- !u!1 &1586310193520402
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +516,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DoNotDestroyGameObjectOnLoad: 0
-  circuitsPrefabs: []
+  circuitsPrefabs:
+  - {fileID: 1701121281579966278, guid: bac6d5c039aba8449941115889eef888, type: 3}
+  - {fileID: 3622923082333416381, guid: 1e86acd1c79019342aa827eeae23bd7f, type: 3}
+  - {fileID: 7600878891878642302, guid: 830c17b76472ca5459b2033dcaca9637, type: 3}
 --- !u!1 &1988735560124880
 GameObject:
   m_ObjectHideFlags: 0

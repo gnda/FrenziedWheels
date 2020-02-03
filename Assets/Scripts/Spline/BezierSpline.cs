@@ -12,7 +12,7 @@ namespace Spline
     {
         [SerializeField] private List<Vector3> points;
         [SerializeField] private BezierControlPointMode[] modes;
-    
+
         public int ControlPointCount {
             get {
                 return points.Count;
@@ -186,6 +186,18 @@ namespace Spline
                     Vector3.Distance(middle, points[enforcedIndex]);
             }
             points[enforcedIndex] = middle + enforcedTangent;
+        }
+
+        public float GetTotalLength()
+        {
+            float length = 0f;
+            
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                length += Math.Abs(Vector3.Distance(points[i], points[i + 1]));
+            }
+
+            return length;
         }
 
         public void AddPoint(Vector3 point)

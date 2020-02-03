@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SDD.Events;
 using System.Linq;
+using DefaultNamespace;
 
 #region Game states, mode and types
 public enum GameState
@@ -14,18 +15,6 @@ public enum GameState
     gameOver,
     gameVictory,
     gameCredits
-}
-
-public enum GameMode
-{
-    local,
-    multiplayer
-}
-
-public enum PlayerType
-{
-    human,
-    computer
 }
 #endregion
 
@@ -44,6 +33,7 @@ public class GameManager : Manager<GameManager>
     {
         if (IsPlaying)
         {
+            Racers.Sort((r1,r2)=>r1.CurrentDistance.CompareTo(r2.CurrentDistance));
             Timer += Time.deltaTime;
         }
     }
@@ -52,58 +42,11 @@ public class GameManager : Manager<GameManager>
 
     #region Game State, Mode and Types
     private GameState gameState;
-    private GameMode gameMode;
-    private PlayerType playerType;
-
-    public GameState GameState { get { return gameState; }} 
-    public GameMode GameMode { get { return gameMode; }} 
-    public PlayerType PlayerType { get { return playerType; }}
-    public int NumberOfPlayer { get; set; } = 0;
+    public int NumberOfCars { get; set; } = 1;
 
     public bool IsPlaying
     {
         get { return gameState == GameState.gamePlay; }
-    }
-    #endregion
-
-    #region Score
-
-    public int BestScore
-    {
-        get { return PlayerPrefs.GetInt("BEST_SCORE", 0); }
-        set { PlayerPrefs.SetInt("BEST_SCORE", value); }
-    }
-
-    void IncScore(Player player, int score)
-    {
-        SetScore(player, player.GainedScore + score);
-    }
-
-    void SetScore(Player player, int score)
-    {
-        player.GainedScore = score;
-
-        EventManager.Instance.Raise(new GameStatisticsChangedEvent()
-        {eBestScore = BestScore, ePlayerNumber = player.PlayerNumber, 
-            eScore = score, eNMonstersLeft = nMonstersLeft});
-    }
-
-    #endregion
-
-    #region Monsters to be destroyed
-    private int nMonstersLeft;
-
-    void DecrementNMonstersLeft(int decrement)
-    {
-        SetNMonstersLeft(nMonstersLeft - decrement);
-    }
-
-    void SetNMonstersLeft(int nMonsters)
-    {
-        nMonstersLeft = nMonsters;
-        
-        EventManager.Instance.Raise(new GameStatisticsChangedEvent()
-        { eNMonstersLeft = nMonstersLeft });
     }
     #endregion
 
@@ -116,6 +59,11 @@ public class GameManager : Manager<GameManager>
     public List<Player> Players
     {
         get { return FindObjectsOfType<Player>().ToList(); }
+    }
+
+    public List<Racer> Racers
+    {
+        get { return FindObjectsOfType<Racer>().ToList(); }
     }
 
     public Circuit CurrentCircuit => FindObjectOfType<Circuit>();
@@ -139,15 +87,13 @@ public class GameManager : Manager<GameManager>
         EventManager.Instance.AddListener<ExitButtonClickedEvent>(ExitButtonClicked);
 
         //Circuit Select
+        EventManager.Instance.AddListener<CircuitButtonClickedEvent>(CircuitButtonClicked);
         EventManager.Instance.AddListener<CircuitOneButtonClickedEvent>(CircuitOneButtonClicked);
         EventManager.Instance.AddListener<CircuitTwoButtonClickedEvent>(CircuitTwoButtonClicked);
         EventManager.Instance.AddListener<CircuitThreeButtonClickedEvent>(CircuitThreeButtonClicked);
         
         //Circuit Generated
         EventManager.Instance.AddListener<CircuitHasBeenInstantiatedEvent>(CircuitHasBeenInstantiated);
-
-        //Score Item
-        EventManager.Instance.AddListener<ScoreItemEvent>(ScoreHasBeenGained);
     }
 
     public override void UnsubscribeEvents()
@@ -159,20 +105,19 @@ public class GameManager : Manager<GameManager>
         EventManager.Instance.RemoveListener<NextCircuitButtonClickedEvent>(NextCircuitButtonClicked);
         EventManager.Instance.RemoveListener<ResumeButtonClickedEvent>(ResumeButtonClicked);
         EventManager.Instance.RemoveListener<EscapeButtonClickedEvent>(EscapeButtonClicked);
+        EventManager.Instance.RemoveListener<CreditsButtonClickedEvent>(CreditsButtonClicked);
         
         //Exit
-        EventManager.Instance.AddListener<ExitButtonClickedEvent>(ExitButtonClicked);
+        EventManager.Instance.RemoveListener<ExitButtonClickedEvent>(ExitButtonClicked);
 
         //Circuit Select
+        EventManager.Instance.RemoveListener<CircuitButtonClickedEvent>(CircuitButtonClicked);
         EventManager.Instance.RemoveListener<CircuitOneButtonClickedEvent>(CircuitOneButtonClicked);
         EventManager.Instance.RemoveListener<CircuitTwoButtonClickedEvent>(CircuitTwoButtonClicked);
         EventManager.Instance.RemoveListener<CircuitThreeButtonClickedEvent>(CircuitThreeButtonClicked);
         
         //Circuit Generated
         EventManager.Instance.RemoveListener<CircuitHasBeenInstantiatedEvent>(CircuitHasBeenInstantiated);
-
-        //Score Item
-        EventManager.Instance.RemoveListener<ScoreItemEvent>(ScoreHasBeenGained);
     }
     
     #endregion
@@ -192,73 +137,21 @@ public class GameManager : Manager<GameManager>
     //Callbacks to events
     
     
-    #region Callbacks to events issued by GameManager
-    
-    private void TimeIsUp(TimeIsUpEvent e)
-    {
-        StartCoroutine(CheckVictory());
-    }
-    
-    #endregion
-
     #region Callbacks to events issued by LevelManager
 
     private void CircuitHasBeenInstantiated(CircuitHasBeenInstantiatedEvent e)
     {
         Timer = 0;
-        //nMonstersLeft = Monsters.Count;
-        
+
         EventManager.Instance.Raise(new GameHasStartedEvent());
-        /*EventManager.Instance.Raise(new GameStatisticsChangedEvent() 
-            { eBestScore = BestScore, ePlayerNumber = -1, 
-                eNMonstersLeft = Monsters.Count});*/
-        
+
         SetTimeScale(1);
         gameState = GameState.gamePlay;
     }
 
     #endregion
-
-    #region Callbacks to events issued by Score items
-
-    private void ScoreHasBeenGained(ScoreItemEvent e)
-    {
-        IScore elementWithScore = e.eElement.GetComponent<IScore>();
-        //IMoveable moveableElement = e.eElement.GetComponent<IMoveable>();
-
-        /*if ((moveableElement != null && elementWithScore != null) &&
-            !moveableElement.IsDestroyed)
-            IncScore(e.ePlayer, elementWithScore.Score);*/
-    }
-
-    private IEnumerator CheckVictory()
-    {
-        if (Players.Count > 0)
-        {
-            Players.Sort((a,b) => a.GainedScore - b.GainedScore);
-
-            if (Players[0].GainedScore != 0)
-            {
-                // Delay to Check if both last player and last enemy are dead
-                yield return new WaitForSeconds(0.1f);
-
-                /*if (Players.Count > 0 && Monsters.Count == 0) 
-                    Victory(Players[0]);*/
-            } else Over();
-        }else Over();
-    }
-
-    #endregion
-
-    #region Callbacks to events issued by Element
-
-    #endregion
-
-    #region Callbacks to events issued by Circuit
-
-    #endregion
-
     
+
     // Callbacks to MenuManager UI events
     
     
@@ -270,17 +163,20 @@ public class GameManager : Manager<GameManager>
     
     private void MainMenuButtonClicked(MainMenuButtonClickedEvent e)
     {
-        EventManager.Instance.Raise(new GameStatisticsChangedEvent() 
-            {eBestScore = BestScore, ePlayerNumber = -1});
         Menu();
+    }
+    
+    private void CircuitButtonClicked(CircuitButtonClickedEvent e)
+    {
+        NumberOfCars = int.Parse(MenuManager.Instance.TxtNumberOfCars.text);
     }
 
     private void NextCircuitButtonClicked(NextCircuitButtonClickedEvent e)
     {
-        EventManager.Instance.Raise(new GameStatisticsChangedEvent() 
-            {eBestScore = BestScore, ePlayerNumber = -1});
         EventManager.Instance.Raise(new GoToNextCircuitEvent()
-            {eCircuitIndex = -1});
+        {
+            eCircuitIndex = -1
+        });
     }
 
     private void ResumeButtonClicked(ResumeButtonClickedEvent e)
@@ -356,23 +252,18 @@ public class GameManager : Manager<GameManager>
         EventManager.Instance.Raise(new GameResumeEvent());
     }
 
-    private void Over()
+    protected override void GameOver(GameOverEvent e)
     {
         SetTimeScale(0);
         gameState = GameState.gameOver;
         SfxManager.Instance.PlaySfx(Constants.GAMEOVER_SFX);
-        EventManager.Instance.Raise(new GameOverEvent());
     }
 
-    private void Victory(Player player)
+    protected override void GameVictory(GameVictoryEvent e)
     {
-        if (player.GainedScore > BestScore)
-            BestScore = player.GainedScore;
-        
         SetTimeScale(0);
         gameState = GameState.gameVictory;
         SfxManager.Instance.PlaySfx(Constants.VICTORY_SFX);
-        EventManager.Instance.Raise(new GameVictoryEvent() {ePlayer = player});
     }
 
     private void Credits()

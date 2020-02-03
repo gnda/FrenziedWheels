@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,8 +26,12 @@ public class HudManager : Manager<HudManager>
 			Player player = GameManager.Instance.Players[0];
 			txtLaps.text = (player.GetComponent<Racer>().Laps) + "/" +
 			    (GameManager.Instance.CurrentCircuit.MaxLaps);
-			txtSpeed.text = ((int) player.GetComponent<Car>().CurrentSpeed).ToString();
-			txtTime.text = ((int) GameManager.Instance.Timer).ToString();
+			txtPosition.text = player.GetComponent<Racer>().Position + "/" + 
+			                   GameManager.Instance.Racers.Count;
+			txtSpeed.text = ((int)player.GetComponent<Car>().CurrentSpeed).ToString();
+			txtTime.text = new DateTime(
+			(long)(GameManager.Instance.Timer * TimeSpan.TicksPerSecond))
+				.ToString("mm:ss:ff");
 		}
 	}
 	#endregion

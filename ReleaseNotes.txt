@@ -8,7 +8,7 @@
 #                                                                             #
 ###############################################################################                                                                            
 
-			Génération de mesh à partir de splines
+		    Génération de mesh à partir de splines
 
 -- Release Notes --
 
@@ -33,10 +33,13 @@ Conclusion
 
 I - Instructions (explication du jeu)
 
-Inspiré du jeu Horizon Chase, l'objectif dans Frenzied Wheels est le même.
+Inspiré du jeu Horizon Chase, l'objectif de Frenzied Wheels est le même.
 
 On a 1 joueur et jusqu'à 19 adversaires (IA). Le joueur doit faire le nombre
-de tours indiqué et tenter de finir premier.
+de tours indiqué et tenter de finir premier (si possible avec le meilleur temps).
+
+On peut choisir le nombre de voitures au total (pas encore limité à 19).
+Il y a 3 circuits différents pour le moments.
 
 Le joueur doit appuyer sur la touche haut pour accélérer et la touche bas pour 
 décélérer. Il peut également s'orienter horizontalement avec les touches gauche et droite.
@@ -46,40 +49,57 @@ Voici les touches tout au long du jeu :
  - les touches wasd (zqsd sur un clavier azerty) mais aussi les flèches directionnelles
    (haut,bas,gauche et droite) pour se déplacer
 
-Si le joueur ne termine pas premier, il perd (pour le moment).
+Si le joueur ne termine pas premier, il devrait perdre (pour le moment).
 
 -- Non Fonctionnel --
 
 Intelligence artificielle des concurrents.
+Gestion de la position dans la course.
 
 
 II - Remarques, bugs connus, améliorations possibles
 
--- Remarques
-
-Pour le moment le mode multijoueur online et local ne fonctionne pas.
-
-J'ai voulu utiliser une matrice dans un premier temps pour repérer les
-éléments du jeu, mais au final j'ai préférer utiliser les raycasts afin de
-ne pas à avoir à actualiser cette matrice dans tous mes objets et d'expérimenter
-cette façon de repérer des éléments.
-
 -- Bugs connus
 
--- Améliorations possibles
+Le nombre de voiture n'est pas contrôlé pour le moment, on peut mettre des valeurs comme 0 
+(plante au lancement du circuit) ou 1000 (va générer beaucoup de voitures).
+Il n'y a pas de limite sur la map donc le joueur peut tomber.
+L'orientation verticale du joueur ne suit pas celle de la route.
+Quand il y a des montées, le joueur se cogne contre la route au lieu de suivre sa forme...
+Ainsi, le joueur peut traverser le mesh du terrain parfois et tomber dans le vide.
+J'ai voulu faire des courbes plus prononcées pour la route dans le 3ème niveau mais le rendu est mauvais.
 
- - programmer une IA fonctionnelle pour le joueur adverse
- - terminer l'implémentation du multijoueur avec Photon Bolt
- - implémenter un multijoueur local fonctionnel (je n'avais pas de manette...)
+
+-- Limitations
+
+J'ai eu du mal à placer des textures pour le mesh généré, ducoup j'ai utilisé des couleurs unies.
+La gestion de l'accélération n'est pas très réaliste.
+On peut "gagner" en touchant plusieurs fois la ligne de départ sans avoir fait les tours.
+
+-- Améliorations possibles
+ 
+ - améliorer la maniabilité
+ - programmer une IA fonctionnelle pour les voitures adverses
+ - programmer une meilleure gestion des collisions
+ - ajout du multijoueur local
+ - amélioration de l'esthétique
 
 
 III - Analyse technique
 
 Le but de ce projet était de travailler sur la génération de mesh (ici notre route) à partir d'une spline.
-Je me suis d'abord renseigné sur les représentations mathématiques possibles d'une spline.
+
+Lors de mes recherches, j'ai vu qu'on peut déjà tracer des courbes de Bézier sur Unity avec la fonction Handles.DrawBezier().
+De même que pour générer des routes j'aurais pu me servir de l'asset "Bézier Path Creator" (Gratuit) que l'on peut trouver ici:
+https://assetstore.unity.com/packages/tools/utilities/b-zier-path-creator-136082
+
+Cependant, l'objectif du projet était de réimplémenter une brique technique, 
+donc ici la génération de mesh à partir d'une spline. J'ai donc préférer réimplémenter la génération de la spline en
+n'utilisant pas d'assets existants, afin de respecter l'objectif et de comprendre comment tout cela marche.
+Pour cela, je me suis d'abord renseigné sur les représentations mathématiques possibles d'une spline.
 
 Je suis tombé sur les courbes de Bézier cubiques, qui nécéssitent quatre points de contrôle, pour être tracées.
-Le traçage est déterminé par la droite (P1P2) qui est tangente à la courbe.
+Pour 4 points P0, P1, P2, P3, le traçage est déterminé par la droite (P1P2) qui est tangente à la courbe.
 
 La suite de ces quatres points constituent le polygône de contrôle de Bézier pour n = 3.
 La représentation paramétrique des courbes de Bézier est une somme de chaque point de contrôle 
@@ -87,17 +107,30 @@ multiplié par le polynôme de Bernstein au degré correspondant.
 
 Mon objectif étant de tracer une route complète à l'aide de splines, 
 ma courbe nécessitait de nombreux points de contrôle.
-Plutôt que de tracer des courbes de Bézier à un degré élevé (temps de calcul important),
+Plutôt que de tracer une seule courbe de Bézier à partir d'un degré élevé (temps de calcul important),
 j'ai préféré m'orienter vers l'usage de B-splines, généralisant l'usage des courbes de Bézier.
 
 En effet, on peut décomposer une courbe spline en une suite de B-splines mises bout à bout.
 
-Je me suis servi des liens suivant pour cette approche :
+Pour créer et éditer mes splines je me suis servi du tutoriel "Curves and Splines" fourni sur catlikecoding.
+J'ai adapté l'éditeur pour la création de mes splines :
+Je peux ajouter des points avec le clic gauche de la souris lorsque le bouton ("Add Points Mode") est enclenché.
+Je peux voir l'allure de la courbe grâce au bouton ("Draw Bezier Spline").
+J'ai également ajouté des cases à cocher pour bloquer certaines directions (x, y ou z) quand je place mes points.
+
+J'ai rencontré de nombreuses difficultés au niveau de la génération de mon mesh, surtout au niveau des virages.
+Ainsi, je me suis principalement fondé sur la présentation de Joachim Holmer (Unite 2015) pour créer le mesh à partir d'une spline.
+
+Grâce à la classe MeshGenerator et aux splines que j'ai créées, j'ai pu générer mes terrains en faisant une extrusion
+tout le long de la spline (ajout successif de triangles). Lors de cette extrusion, je précise la largeur de mon mesh et cela m'a été
+utile pour créer la route et le sol.
+
+Ainsi, je me suis servi des liens suivants pour implémenter tout cela :
+https://www.youtube.com/watch?v=o9RK6O2kOKo
+https://catlikecoding.com/unity/tutorials/curves-and-splines/
 https://fr.wikipedia.org/wiki/B-spline
 https://www.irif.fr/~carton/Enseignement/InterfacesGraphiques/MasterInfo/Cours/Swing/splines.html
 
-
-Difficulté UV maps et virages
 
 IV - Assets et éléments utilisés
 
@@ -106,36 +139,14 @@ Pour ce projet, je me suis servi de (ou j'ai modifié) :
  - assets venant de l'Assets Store d'Unity (formes basiques) : gratuits tout comme Unity
    si on fait des profits en dessous de 100 000$ par an 
    licence : Unity Terms of Service.
-   - "Mobile depth water shader" by ValakhP
-
- - effets graphiques :
-  - "Shooty Skies Style Explosion" by James Heazlewood, tuto sur youtube.com
+   - "Skybox add-on" by Eclypso
 
  - musiques trouvées sur : Opengameart.org
-  - "Puzzle Tune 1" by rezoner licensed CC-BY 3.0
-  - "Desert Theme" by yd licensed CC0
-  - "Crystal Cave + Mysterious Ambience (seamless loop)" by
-  	cynicmusic licensed CC-BY 3.0, CC-BY-SA 3.0, GPL 3.0
-  - "Through Space" by maxstack licensed CC-BY-SA 3.0
-
- - effets sonores trouvés sur : Opengameart.com
-  - "8-Bit Sound Effects Library" by Little Robot Sound Factory licensed CC-BY 3.0
-  - "bomb_explosion_8bit" by Luke.RUSTLTD licensed CC0
-
- - Je comptais utiliser Photon Bolt pour ce projet mais je l'ai retiré car le mode
-   multijoueur n'a pas été implémenté.
-
- - Bouton de l'UI fait sous Gimp.
-
- - modèles faits sous VoxEdit
-
- - sons modifiés avec Audacity
-
- - assets graphiques pour les backgrounds :
-  - sur Opengameart.com :
-   - "Simple Seamless tiles of dirt and sand" by LuminousDragonGames licensed CC0
-  - sur forums.rpgmakerweb.com :
-   - "Free Candy theme tileset" by Lemori licensed CC0
+  - "Retroracing Menu (Synthwave)" by Bogart VGM licensed CC-BY 4.0
+	https://www.facebook.com/BogartVGM/
+  - "Miami Soul" by neocrey licensed CC-BY 3.0
+  - "Neon Owl" by Zodik licensed CC-BY 3.0
+  - "Darker Waves" by Zander Noriega licensed CC-BY 3.0
 
 
 V - Rôles dans ce projet
@@ -148,19 +159,10 @@ Dans ce projet je me suis focalisé sur les rôles suivants :
 
 Conclusion
 
+J'ai passé beaucoup de temps sur la partie génération de mesh à partir d'une spline car je n'ai pas compris de suite tout le contenu que j'ai consulté.
+Cela s'est fait au détriment de nombreux éléments de gameplay et d'éléments graphiques.
 
-Ce projet fut très intéressant pour mettre en pratique ce qu'on a appris
-sur Unity.
+La partie génération de mesh à base de spline fonctionne au final, mais il reste pas mal d'améliorations possibles notamment au niveau des colliders et 
+au niveau de l'aspect du mesh.
 
-Être seul à finalement jouer en ma défaveur puisque je suis en retard dans
-la livraison du projet et que je me rend compte que tout le monde s'est 
-beaucoup investit, ce qui change par rapport à d'autre projets.
-
-Cependant, cela m'a permis de bien comprendre qu'il y a différents rôles dans 
-création d'un jeu et qu'on ne peut pas tout endosser.
-
-De plus il faut apprendre à lâcher prise sur ce qu'on ne peut pas faire dans un
-temps donné.
-
-Je constate donc que c'est un bon entraînement pour la GameJam de l'année prochaine,
-au cours de laquelle il faudra faire beaucoup dans un temps bien plus court.
+Certes, j'aurais passé beaucoup de temps à implémenter mes outils et la génération de mesh, mais cela m'a permis de comprendre pas mal de choses sur le sujet.

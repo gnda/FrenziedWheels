@@ -27,13 +27,13 @@ public class CircuitsManager : Manager<CircuitsManager> {
 	public override void SubscribeEvents()
 	{
 		base.SubscribeEvents();
-		EventManager.Instance.AddListener<GoToNextCircuitEvent>(GoToNextLevel);
+		EventManager.Instance.AddListener<GoToNextCircuitEvent>(GoToNextCircuit);
 	}
 
 	public override void UnsubscribeEvents()
 	{
 		base.UnsubscribeEvents();
-		EventManager.Instance.RemoveListener<GoToNextCircuitEvent>(GoToNextLevel);
+		EventManager.Instance.RemoveListener<GoToNextCircuitEvent>(GoToNextCircuit);
 	}
 	#endregion
 
@@ -47,24 +47,23 @@ public class CircuitsManager : Manager<CircuitsManager> {
 
 		EventManager.Instance.Raise(new CircuitHasBeenDestroyedEvent());
 		Destroy(currentCircuitGO);
-		currentCircuitGO = null;
 	}
 
-	void InstantiateLevel()
+	void InstantiateCircuit()
 	{
 		currentCircuitIndex = Mathf.Max(currentCircuitIndex, 0) % circuitsPrefabs.Length;
 		MusicLoopsManager.Instance.PlayMusic(currentCircuitIndex + 1);
 		currentCircuitGO = Instantiate(circuitsPrefabs[currentCircuitIndex]);
 	}
 
-	private IEnumerator GoToNextLevelCoroutine()
+	private IEnumerator GoToNextCircuitCoroutine()
 	{
-		Destroy(currentCircuitGO);
+		Reset();
 		while (currentCircuitGO) yield return null;
-
-		if (currentCircuitIndex == circuitsPrefabs.Length)
+		
+		if (currentCircuitIndex >= circuitsPrefabs.Length)
 			EventManager.Instance.Raise(new CreditsButtonClickedEvent());
-		else InstantiateLevel();
+		else InstantiateCircuit();
 	}
 	#endregion
 
@@ -78,16 +77,14 @@ public class CircuitsManager : Manager<CircuitsManager> {
 		Reset();
 	}
 
-	public void GoToNextLevel(GoToNextCircuitEvent e)
+	public void GoToNextCircuit(GoToNextCircuitEvent e)
 	{
-		Player.PlayerCount = 0;
-
 		if (e.eCircuitIndex != -1)
 			currentCircuitIndex = e.eCircuitIndex;
 		else
 			currentCircuitIndex++;
 
-		StartCoroutine(GoToNextLevelCoroutine());
+		StartCoroutine(GoToNextCircuitCoroutine());
 	}
 	#endregion
 }

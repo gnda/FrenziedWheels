@@ -15,10 +15,10 @@ public class Circuit : MonoBehaviour, IEventHandler
     public BezierSpline LevelBaseSpline => levelBaseSpline;
     [SerializeField] private Material roadMaterial;
     [SerializeField] private Material groundMaterial;
+    [SerializeField] private Material skyboxMaterial;
 
     [Header(("LevelSettings"))] 
     [SerializeField] public int MaxLaps = 1;
-    [SerializeField][Range(1,19)] private int numberOfOpponents = 1;
 
     [Header(("LevelGeneralPrefabs"))]
     [SerializeField] private GameObject[] carPrefabs;
@@ -38,7 +38,7 @@ public class Circuit : MonoBehaviour, IEventHandler
     {
     }
     #endregion
-    
+
     #region MonoBehaviour lifecycle
     private void Awake()
     {
@@ -62,6 +62,9 @@ public class Circuit : MonoBehaviour, IEventHandler
 
     private void GenerateCircuit()
     {
+        //Setting Skybox
+        RenderSettings.skybox = skyboxMaterial;
+        
         //Level static scene elements
         levelElements = new GameObject("Level Scene Elements");
         levelElements.transform.SetParent(transform);
@@ -76,6 +79,7 @@ public class Circuit : MonoBehaviour, IEventHandler
         
         //Generate Road
         roadGO = GenerateElementFromSpline("Road", 20, roadMaterial);
+        roadGO.tag = "Road";
         
         //Adding Finishing Line
         finishingLineGO =  Instantiate(finishingLinePrefab, levelElements.transform);
@@ -96,24 +100,25 @@ public class Circuit : MonoBehaviour, IEventHandler
         playerGO.AddComponent<PlayerController>();
         playerGO.AddComponent<Racer>();
         
+        Debug.Log(startPositions.Count);
+        Debug.Log(carPrefabs.Length);
         //Add AI opponents
-        /*for (int i = 0; i < numberOfOpponents; i++)
+        for (int i = 0; i < GameManager.Instance.NumberOfCars - 1; i++)
         {
             GameObject carGO = Instantiate(
                 carPrefabs[Random.Range(0, carPrefabs.Length)], startPositions[i], 
                 Quaternion.identity, carsGO.transform);
             carGO.AddComponent<AIController>();
             carGO.AddComponent<Racer>();
-        }*/
+        }
 
         //Setting up camera
         Camera camera = FindObjectOfType<Camera>();
         Transform ct = camera.transform;
         ct.SetParent(playerGO.transform);
-        ct.localPosition = new Vector3(0,2f, -6.5f);
+        ct.localPosition = new Vector3(0,2f, -10f);
         ct.localRotation = Quaternion.identity;
         ct.localScale = Vector3.one;
-        
 
         EventManager.Instance.Raise(new CircuitHasBeenInstantiatedEvent());
     }
@@ -136,14 +141,15 @@ public class Circuit : MonoBehaviour, IEventHandler
     private List<Vector3> GenerateStartPositions()
     {
         List<Vector3> startPositions = new List<Vector3>();
+        int numberOfCars = GameManager.Instance.NumberOfCars;
 
-        for (int i = 1; i <= (int)Math.Ceiling(numberOfOpponents / 3f); i++)
+        for (int i = 1; i <= (int)Math.Ceiling(numberOfCars / 3f); i++)
         {
             for (int j = -1; j < 2; j++)
             {
-                if (startPositions.Count + 1 > numberOfOpponents + 1)
+                if (startPositions.Count == numberOfCars)
                     return startPositions;
-                Vector3 newPosition = new Vector3( j * 3, 0, -i * 4);
+                Vector3 newPosition = new Vector3( j * 4, 0, -i * 8);
                 startPositions.Add(newPosition);
             }
         }
