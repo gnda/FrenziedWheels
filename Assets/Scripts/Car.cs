@@ -34,5 +34,9 @@ public class Car : MonoBehaviour
     {
         // Limit speed
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0f, MaxSpeed);
+        // Block z rotation
+        //var rotation = transform.rotation;
+        //rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.z, 0);
+        //transform.rotation = rotation;
     }
 }

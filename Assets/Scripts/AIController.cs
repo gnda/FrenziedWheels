@@ -11,10 +11,9 @@ namespace DefaultNamespace
         private Racer currentRacer;
         private Circuit currentCircuit;
         private BezierSpline circuitSpline;
-        private int steps = 2000; 
-        private float nextStep = 20;
+        private float nextStep;
         private Vector3 nextPosition;
-        private bool IsMoving = false;
+        private bool IsMoving;
 	
         #region MonoBehaviour lifecycle
         // Use this for initialization
@@ -31,19 +30,29 @@ namespace DefaultNamespace
 
         IEnumerator MoveCoroutine()
         {
+            Transform transf = transform;
+            var startingPos = transf.position;
+            Quaternion startRot = transf.rotation;
+            
             float timeElapsed = 0;
             IsMoving = true;
 
-            while (timeElapsed < 10)
+            Vector3 relativePos = nextPosition - startingPos;
+            
+            while (timeElapsed < 1f)
             {
-                Debug.Log(timeElapsed);
+                transform.rotation = Quaternion.Slerp(
+                    startRot, 
+                    Quaternion.LookRotation(relativePos, Vector3.up), timeElapsed / 1f);
+                transform.position =  Vector3.Lerp(startingPos, nextPosition, timeElapsed / 1f);
                 timeElapsed += Time.deltaTime;
-                transform.position = transform.position + nextPosition.normalized;
-                //Vector3.Lerp(transform.position, nextPosition, timeElapsed / 10);
                 yield return null;
             }
             
-            yield return IsMoving = false;     
+            transform.position = nextPosition;
+            transform.rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+
+            yield return IsMoving = false;
         }
 
         // Update is called once per frame
@@ -51,52 +60,14 @@ namespace DefaultNamespace
         {
             if (GameManager.Instance && !GameManager.Instance.IsPlaying) return;
 
-            /*if (vInput > 0f)
-            {
-                currentCar.Accelerate();
-            }
-            else if (currentCar.CurrentSpeed > 0f)
-            {
-                if (vInput < 0f)
-                {
-                    currentCar.Decelerate(3f);
-                }
-                else
-                {
-                    currentCar.Decelerate();
-                }
-            }*/
-
-            //transform.position = (nextPosition * Time.deltaTime);
-            //transform.Rotate(nextPosition * Time.deltaTime);
-            //}
-            //else
-            //{
-            if (!IsMoving) {
-                nextStep += 1;
-                nextPosition = circuitSpline.GetPoint(nextStep / circuitSpline.GetTotalLength());
-            }
+            if (IsMoving) return;
             
-            StartCoroutine(MoveCoroutine());
-            //}
-            /*else
-            {
-                nextPosition = circuitSpline.GetPoint(currentRacer.CurrentDistance + 5 % circuitSpline.GetTotalLength() / circuitSpline.GetTotalLength());
-            }*/
-            //Vector3 nextPosition = circuitSpline.GetPoint((Time.deltaTime % steps) / steps);
+            nextStep += 10;
+            nextPosition = circuitSpline.GetPoint((nextStep % 
+                circuitSpline.GetTotalLength()) / circuitSpline.GetTotalLength());
+            nextPosition.y = transform.position.y;
 
-            //Vector3 nextPoint = circuitSpline.GetPoint(
-            //(nextStep % circuitSpline.GetTotalLength()) / circuitSpline.GetTotalLength());
-            //if (Vector3.Distance(transform.position,nextPoint) > 0f){
-            //currentCar.CurrentSpeed += (currentCar.AccelerationRate * Time.deltaTime);
-            //transform.Translate(nextPoint * Time.deltaTime);
-            //transform.position = nextPoint;
-            //}
-            //else
-            //{
-            //currentCar.CurrentSpeed -= (currentCar.DecelerationRate * Time.deltaTime);
-            //nextStep += 1;
-            //}
+            StartCoroutine(MoveCoroutine());
         }
         #endregion
     }

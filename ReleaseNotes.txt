@@ -53,8 +53,7 @@ Si le joueur ne termine pas premier, il devrait perdre (pour le moment).
 
 -- Non Fonctionnel --
 
-Intelligence artificielle des concurrents.
-Gestion de la position dans la course.
+Gestion de la position par rapport aux adversaires dans la course.
 
 
 II - Remarques, bugs connus, améliorations possibles
@@ -79,7 +78,7 @@ On peut "gagner" en touchant plusieurs fois la ligne de départ sans avoir fait 
 -- Améliorations possibles
  
  - améliorer la maniabilité
- - programmer une IA fonctionnelle pour les voitures adverses
+ - programmer une IA plus poussée pour les voitures adverses
  - programmer une meilleure gestion des collisions
  - ajout du multijoueur local
  - amélioration de l'esthétique
@@ -125,6 +124,8 @@ Grâce à la classe MeshGenerator et aux splines que j'ai créées, j'ai pu gén
 tout le long de la spline (ajout successif de triangles). Lors de cette extrusion, je précise la largeur de mon mesh et cela m'a été
 utile pour créer la route et le sol.
 
+L'IA programmée pour l'instant se déplaçe en suivant la forme de la spline, il faudrait ajouter plus de liberter de mouvement.
+
 Ainsi, je me suis servi des liens suivants pour implémenter tout cela :
 https://www.youtube.com/watch?v=o9RK6O2kOKo
 https://catlikecoding.com/unity/tutorials/curves-and-splines/
@@ -140,6 +141,9 @@ Pour ce projet, je me suis servi de (ou j'ai modifié) :
    si on fait des profits en dessous de 100 000$ par an 
    licence : Unity Terms of Service.
    - "Skybox add-on" by Eclypso
+
+ - assets trouvées sur : Opengameart.org
+   - "Low Poly American Muscle Car" by T Allen Studios licensed CC-BY 4.0
 
  - musiques trouvées sur : Opengameart.org
   - "Retroracing Menu (Synthwave)" by Bogart VGM licensed CC-BY 4.0
