@@ -65,7 +65,7 @@ namespace DefaultNamespace
             nextStep += 10;
             nextPosition = circuitSpline.GetPoint((nextStep % 
                 circuitSpline.GetTotalLength()) / circuitSpline.GetTotalLength());
-            nextPosition.y = transform.position.y;
+            //nextPosition.y = transform.position.y;
 
             StartCoroutine(MoveCoroutine());
         }

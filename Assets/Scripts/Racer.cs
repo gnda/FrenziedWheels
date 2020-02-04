@@ -10,6 +10,7 @@ namespace DefaultNamespace
         public int Position { get; set; }
         
         public float CurrentDistance { get; set; }
+        public Vector3 StartPosition { get; set; }
         public float EndRaceTime { get; set; }
 
         private Circuit currentCircuit;
@@ -22,6 +23,7 @@ namespace DefaultNamespace
             currentCar = GetComponent<Car>();
             racers = GameManager.Instance.Racers;
             CurrentDistance = 0;
+            StartPosition = transform.position;
         }
 
         private void Update()
@@ -33,7 +35,7 @@ namespace DefaultNamespace
         {
             if (other.collider.CompareTag("Road") && currentCar.CurrentSpeed > 0)
             {
-                CurrentDistance += currentCar.CurrentSpeed * Time.deltaTime;
+                CurrentDistance = Vector3.Distance(StartPosition, transform.position);
             }
         }
 
