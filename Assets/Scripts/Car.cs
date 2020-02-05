@@ -32,11 +32,14 @@ public class Car : MonoBehaviour
     
     private void Update()
     {
+        Transform transf = transform;
         // Limit speed
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0f, MaxSpeed);
         // Block z rotation
-        //var rotation = transform.rotation;
-        //rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.z, 0);
-        //transform.rotation = rotation;
+        transform.Rotate(0,0, -transf.eulerAngles.z, Space.Self);
+        // Limit vertical position
+        Vector3 currentPos = transf.position;
+        transform.position = new Vector3(currentPos.x, 
+            Mathf.Clamp(currentPos.y, -30f, 7f), currentPos.z);
     }
 }

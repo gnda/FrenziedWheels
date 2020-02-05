@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using SDD.Events;
 using Spline;
 using UnityEngine;
 
@@ -13,8 +12,9 @@ namespace DefaultNamespace
         private BezierSpline circuitSpline;
         private float nextStep;
         private Vector3 nextPosition;
-        private bool IsMoving;
-	
+        private bool IsMoving, HasStartedMoving;
+        private static float startMovingDelay;
+
         #region MonoBehaviour lifecycle
         // Use this for initialization
         void Start ()
@@ -24,8 +24,8 @@ namespace DefaultNamespace
             currentCircuit = GameManager.Instance.CurrentCircuit;
             circuitSpline = currentCircuit.LevelBaseSpline;
             currentCar.CurrentSpeed = 10;
-            nextPosition = circuitSpline.GetPoint(nextStep / circuitSpline.GetTotalLength());
-            nextPosition.y = 0.5f;
+            nextPosition = circuitSpline.GetPoint(
+                nextStep / circuitSpline.GetTotalLength());
         }
 
         IEnumerator MoveCoroutine()
@@ -36,6 +36,12 @@ namespace DefaultNamespace
             
             float timeElapsed = 0;
             IsMoving = true;
+
+            if (!HasStartedMoving)
+            {
+                HasStartedMoving = true;
+                yield return new WaitForSeconds(startMovingDelay += 1f);
+            }
 
             Vector3 relativePos = nextPosition - startingPos;
             
@@ -61,11 +67,10 @@ namespace DefaultNamespace
             if (GameManager.Instance && !GameManager.Instance.IsPlaying) return;
 
             if (IsMoving) return;
-            
-            nextStep += 10;
+
+            nextStep += currentCar.CurrentSpeed;
             nextPosition = circuitSpline.GetPoint((nextStep % 
                 circuitSpline.GetTotalLength()) / circuitSpline.GetTotalLength());
-            //nextPosition.y = transform.position.y;
 
             StartCoroutine(MoveCoroutine());
         }

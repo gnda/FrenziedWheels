@@ -36,7 +36,7 @@ public class PlayerController : SimpleGameStateObserver, IEventHandler
 		}
 
 		transform.Translate(0f, 0f, currentCar.CurrentSpeed * Time.deltaTime);
-		transform.Rotate(new Vector3(0,50 * hInput * Time.deltaTime,0));
+		transform.Rotate(new Vector3(0,80 * hInput * Time.deltaTime,0));
 	}
 	#endregion
 }
