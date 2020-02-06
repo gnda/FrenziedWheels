@@ -26,16 +26,27 @@ namespace DefaultNamespace
             StartPosition = transform.position;
         }
 
+        private float getCurrentPercProgression()
+        {
+            return (CurrentDistance / 
+                    currentCircuit.LevelBaseSpline.GetTotalLength()) * 100;
+        }
+
         private void Update()
         {
+            racers.Sort((r1, r2) => r1.CurrentDistance.CompareTo(r2.CurrentDistance));
             Position = racers.IndexOf(this);
+            if (!currentCar.IsGrounded && currentCar.CurrentSpeed > 0)
+            {
+                CurrentDistance += currentCar.CurrentSpeed * Time.deltaTime;
+            }
         }
 
         private void OnCollisionStay(Collision other)
         {
             if (other.collider.CompareTag("Road") && currentCar.CurrentSpeed > 0)
             {
-                CurrentDistance = Vector3.Distance(StartPosition, transform.position);
+                CurrentDistance += currentCar.CurrentSpeed * Time.deltaTime;
             }
         }
 
@@ -45,7 +56,10 @@ namespace DefaultNamespace
             {
                 if (Laps < currentCircuit.MaxLaps)
                 {
-                    Laps++;
+                    if ((Laps == 0) || getCurrentPercProgression() % 100 > 90)
+                    {
+                        Laps++;
+                    }
                 }
                 else
                 {

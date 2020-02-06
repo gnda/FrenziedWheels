@@ -11,7 +11,9 @@ public class Circuit : MonoBehaviour, IEventHandler
     #region Settings & Prefabs
 
     [field: Header(("LevelDesign"))] 
-    [SerializeField] private BezierSpline levelBaseSpline; 
+    [SerializeField] private BezierSpline levelBaseSpline;
+    [SerializeField] private int roadWidth;
+    [SerializeField] private int groundWidth;
     public BezierSpline LevelBaseSpline => levelBaseSpline;
     [SerializeField] private Material roadMaterial;
     [SerializeField] private Material groundMaterial;
@@ -74,17 +76,18 @@ public class Circuit : MonoBehaviour, IEventHandler
         carsGO.transform.SetParent(transform);
 
         //Generate Ground
-        groundGO = GenerateElementFromSpline("Ground", 150, groundMaterial);
-        groundGO.transform.position = new Vector3(0,-0.1f,0);
+        groundGO = GenerateElementFromSpline("Ground", groundWidth, groundMaterial);
+        groundGO.transform.position = new Vector3(0,-0.05f,0);
+        groundGO.tag = "Ground";
         
         //Generate Road
-        roadGO = GenerateElementFromSpline("Road", 20, roadMaterial);
+        roadGO = GenerateElementFromSpline("Road", roadWidth, roadMaterial);
         roadGO.tag = "Road";
         
         //Adding Finishing Line
         finishingLineGO =  Instantiate(finishingLinePrefab, levelElements.transform);
-        finishingLineGO.transform.position = new Vector3(0,0.1f,0);
-        finishingLineGO.transform.localScale += new Vector3(0,0,2);
+        finishingLineGO.transform.position = new Vector3(0,0.01f,0);
+        finishingLineGO.transform.localScale += new Vector3(0,0,roadWidth/10f);
         finishingLineGO.transform.Rotate(0,-90,0);
         
         //Generate start positions

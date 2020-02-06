@@ -40,7 +40,7 @@ namespace DefaultNamespace
             if (!HasStartedMoving)
             {
                 HasStartedMoving = true;
-                yield return new WaitForSeconds(startMovingDelay += 1f);
+               // yield return new WaitForSeconds(startMovingDelay += 1f);
             }
 
             Vector3 relativePos = nextPosition - startingPos;
@@ -68,9 +68,10 @@ namespace DefaultNamespace
 
             if (IsMoving) return;
 
+            currentCar.Accelerate();
             nextStep += currentCar.CurrentSpeed;
             nextPosition = circuitSpline.GetPoint((nextStep % 
-                circuitSpline.GetTotalLength()) / circuitSpline.GetTotalLength());
+                circuitSpline.GetTotalLength()) / circuitSpline.GetTotalLength()) + new Vector3(2,0,2);
 
             StartCoroutine(MoveCoroutine());
         }

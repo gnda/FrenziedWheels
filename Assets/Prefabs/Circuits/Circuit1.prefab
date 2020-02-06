@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelBaseSpline: {fileID: 8682401219589218766}
+  roadWidth: 35
+  groundWidth: 150
   roadMaterial: {fileID: 2100000, guid: 07384198cc2f0a84a8f9bfb56f26fa9f, type: 2}
   groundMaterial: {fileID: 2100000, guid: c4686d439756ab7428f3e54a59856c13, type: 2}
   skyboxMaterial: {fileID: 2100000, guid: 1001bc62adaa0451cb40206853391b06, type: 2}

@@ -1,10 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Car : MonoBehaviour
 {
     public float CurrentSpeed { get; set; }
+    public bool IsGrounded { get; set; }
 
     [field: SerializeField] public float MaxSpeed { get; set; } = 0f;
     [field: SerializeField] public float AccelerationRate { get; set; } = 0f;
@@ -37,9 +37,25 @@ public class Car : MonoBehaviour
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0f, MaxSpeed);
         // Block z rotation
         transform.Rotate(0,0, -transf.eulerAngles.z, Space.Self);
-        // Limit vertical position
-        Vector3 currentPos = transf.position;
-        transform.position = new Vector3(currentPos.x, 
-            Mathf.Clamp(currentPos.y, -30f, 7f), currentPos.z);
+
+        /*if (!IsGrounded)
+        {
+            CurrentSpeed *= 0.98f;
+        }*/
+    }
+    
+    private void OnCollisionStay(Collision other)
+    {
+        IsGrounded = true;
+        
+        /*if (other.collider.CompareTag("Ground") && CurrentSpeed > 0)
+        {
+            Decelerate(0.5f);
+        }*/
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        IsGrounded = false;
     }
 }
