@@ -4,6 +4,8 @@ using DefaultNamespace;
 using UnityEngine;
 using SDD.Events;
 using Spline;
+using UnityStandardAssets.Cameras;
+using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
 
 public class Circuit : MonoBehaviour, IEventHandler
@@ -24,6 +26,7 @@ public class Circuit : MonoBehaviour, IEventHandler
 
     [Header(("LevelGeneralPrefabs"))]
     [SerializeField] private GameObject[] carPrefabs;
+    [SerializeField] private GameObject[] aiCarPrefabs;
     [SerializeField] private GameObject[] bonusPrefabs;
     
     [Header(("ScenePrefabs"))]
@@ -82,6 +85,7 @@ public class Circuit : MonoBehaviour, IEventHandler
         
         //Generate Road
         roadGO = GenerateElementFromSpline("Road", roadWidth, roadMaterial);
+        WaypointCircuit wpc = RetrieveWaypointsFromSpline(roadGO, levelBaseSpline, 50);
         roadGO.tag = "Road";
         
         //Adding Finishing Line
@@ -99,44 +103,59 @@ public class Circuit : MonoBehaviour, IEventHandler
         //Add player
         GameObject playerGO = Instantiate(carPrefabs[0], playerStartPosition, 
             Quaternion.identity, carsGO.transform);
+        playerGO.tag = "Player";
         playerGO.AddComponent<Player>();
-        playerGO.AddComponent<PlayerController>();
         playerGO.AddComponent<Racer>();
 
         //Add AI opponents
         for (int i = 0; i < GameManager.Instance.NumberOfCars - 1; i++)
         {
             GameObject carGO = Instantiate(
-                carPrefabs[Random.Range(0, carPrefabs.Length)], startPositions[i], 
+                aiCarPrefabs[Random.Range(0, carPrefabs.Length)], startPositions[i], 
                 Quaternion.identity, carsGO.transform);
-            carGO.AddComponent<AIController>();
             carGO.AddComponent<Racer>();
         }
-
-        //Setting up camera
-        Camera camera = FindObjectOfType<Camera>();
-        Transform ct = camera.transform;
-        ct.SetParent(playerGO.transform);
-        ct.localPosition = new Vector3(0,2f, -10f);
-        ct.localRotation = Quaternion.identity;
-        ct.localScale = Vector3.one;
 
         EventManager.Instance.Raise(new CircuitHasBeenInstantiatedEvent());
     }
 
-    private GameObject GenerateElementFromSpline(String name, int width, 
-        Material mat)
+    private GameObject GenerateElementFromSpline(String name, int width, Material mat)
     {
         GameObject elementGO = new GameObject(name);
         elementGO.transform.SetParent(levelElements.transform);
         MeshFilter elementMF = elementGO.AddComponent<MeshFilter>();
         MeshRenderer elementMR = elementGO.AddComponent<MeshRenderer>();
-        elementMF.sharedMesh = 
-            MeshGenerator.ExtrudeMeshAlongSpline(levelBaseSpline, width);
+        elementMF.sharedMesh = MeshGenerator.
+            ExtrudeMeshAlongSpline(levelBaseSpline, width);
         elementMR.material = mat;
         elementGO.AddComponent<MeshCollider>();
 
         return elementGO;
+    }
+    
+    public static WaypointCircuit RetrieveWaypointsFromSpline(GameObject go, 
+        BezierSpline spline, int steps = 100)
+    {
+        WaypointCircuit wpc = go.AddComponent<WaypointCircuit>();
+        wpc.waypointList.items = new Transform[1];
+
+        for (int i = 0; i <= steps; i++)
+        {
+            GameObject newChild = new GameObject("Waypoint " + (i).ToString("000"));
+            newChild.transform.parent = wpc.transform;
+            newChild.transform.position = spline.GetPoint((float) i / steps);
+            newChild.transform.rotation = spline.GetOrientation((float) i / steps);
+            if (i > 0)
+            {
+                Array.Resize(ref wpc.waypointList.items, wpc.waypointList.items.Length + 1);
+            }
+            wpc.waypointList.items[i] = newChild.transform;
+        }
+        
+        wpc.numPoints = wpc.Waypoints.Length;
+        wpc.CachePositionsAndDistances();
+
+        return wpc;
     }
 
     private List<Vector3> GenerateStartPositions()

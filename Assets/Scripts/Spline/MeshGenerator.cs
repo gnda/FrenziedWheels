@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityStandardAssets.Utility;
 
 /*
  * Code heavily inspired by 
@@ -10,7 +11,7 @@ namespace Spline
 {
     public class MeshGenerator {
         // Using a simple line as 2D shape for the extrusion (for now)
-        private static ExtrudeShape GenerateShapeToExtrude(int width)
+        public static ExtrudeShape GenerateShapeToExtrude(int width)
         {
             Vertex[] verts2D = {new Vertex(
                 new Vector3(-width/2f,0,0), Vector3.up, 0)};
@@ -104,7 +105,7 @@ namespace Spline
 
             return triangleIndices;
         }
-
+        
         public static Mesh ExtrudeMeshAlongSpline(BezierSpline spline, 
             int width, int steps = 100)
         {

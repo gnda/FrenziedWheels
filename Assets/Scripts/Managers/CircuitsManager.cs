@@ -41,9 +41,6 @@ public class CircuitsManager : Manager<CircuitsManager> {
 	void Reset()
 	{
 		Player.PlayerCount = 0;
-		// Detach Camera from player
-		Camera camera = FindObjectOfType<Camera>();
-		camera.transform.parent = null;
 
 		EventManager.Instance.Raise(new CircuitHasBeenDestroyedEvent());
 		Destroy(currentCircuitGO);

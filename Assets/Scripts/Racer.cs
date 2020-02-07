@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SDD.Events;
 using UnityEngine;
+using UnityStandardAssets.Vehicles.Car;
 
 namespace DefaultNamespace
 {
@@ -14,13 +15,13 @@ namespace DefaultNamespace
         public float EndRaceTime { get; set; }
 
         private Circuit currentCircuit;
-        private Car currentCar;
+        private CarController currentCar;
         private List<Racer> racers;
 
         private void Start()
         {
             currentCircuit = GameManager.Instance.CurrentCircuit;
-            currentCar = GetComponent<Car>();
+            currentCar = GetComponent<CarController>();
             racers = GameManager.Instance.Racers;
             CurrentDistance = 0;
             StartPosition = transform.position;
@@ -36,7 +37,7 @@ namespace DefaultNamespace
         {
             racers.Sort((r1, r2) => r1.CurrentDistance.CompareTo(r2.CurrentDistance));
             Position = racers.IndexOf(this);
-            if (!currentCar.IsGrounded && currentCar.CurrentSpeed > 0)
+            if (currentCar.CurrentSpeed > 0)
             {
                 CurrentDistance += currentCar.CurrentSpeed * Time.deltaTime;
             }

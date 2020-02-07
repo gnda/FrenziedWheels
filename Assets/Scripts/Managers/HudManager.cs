@@ -4,6 +4,7 @@ using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 using SDD.Events;
+using UnityStandardAssets.Vehicles.Car;
 
 public class HudManager : Manager<HudManager>
 {
@@ -28,7 +29,7 @@ public class HudManager : Manager<HudManager>
 			    (GameManager.Instance.CurrentCircuit.MaxLaps);
 			txtPosition.text = player.GetComponent<Racer>().Position + "/" + 
 			                   GameManager.Instance.Racers.Count;
-			txtSpeed.text = ((int)player.GetComponent<Car>().CurrentSpeed).ToString();
+			txtSpeed.text = ((int)player.GetComponent<CarController>().CurrentSpeed).ToString();
 			txtTime.text = new DateTime(
 			(long)(GameManager.Instance.Timer * TimeSpan.TicksPerSecond))
 				.ToString("mm:ss:ff");

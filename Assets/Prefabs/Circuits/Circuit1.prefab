@@ -49,10 +49,12 @@ MonoBehaviour:
   groundWidth: 150
   roadMaterial: {fileID: 2100000, guid: 07384198cc2f0a84a8f9bfb56f26fa9f, type: 2}
   groundMaterial: {fileID: 2100000, guid: c4686d439756ab7428f3e54a59856c13, type: 2}
-  skyboxMaterial: {fileID: 2100000, guid: 1001bc62adaa0451cb40206853391b06, type: 2}
+  skyboxMaterial: {fileID: 2100000, guid: bb6a3319151b3ea4190dfde173aafdb1, type: 2}
   MaxLaps: 2
   carPrefabs:
-  - {fileID: 6653018579779980432, guid: 546249d66864db749bb9f343df806f5f, type: 3}
+  - {fileID: 100042, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
+  aiCarPrefabs:
+  - {fileID: 100064, guid: 0fb4610dba67fc24cb2a6674fb155fc1, type: 3}
   bonusPrefabs: []
   finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
     type: 3}

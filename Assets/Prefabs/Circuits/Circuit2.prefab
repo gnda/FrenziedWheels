@@ -45,14 +45,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelBaseSpline: {fileID: 304249358762205381}
-  roadWidth: 20
+  roadWidth: 35
   groundWidth: 150
   roadMaterial: {fileID: 2100000, guid: 2c9b40502215e654394311b24e518fa4, type: 2}
   groundMaterial: {fileID: 2100000, guid: 2cddca58e8be04c46863287409b1de01, type: 2}
   skyboxMaterial: {fileID: 2100000, guid: 5ccb8522ec84149389086cf95fce26f9, type: 2}
   MaxLaps: 3
   carPrefabs:
-  - {fileID: 6653018579779980432, guid: 546249d66864db749bb9f343df806f5f, type: 3}
+  - {fileID: 100042, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
+  aiCarPrefabs:
+  - {fileID: 100064, guid: 0fb4610dba67fc24cb2a6674fb155fc1, type: 3}
   bonusPrefabs: []
   finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
     type: 3}
