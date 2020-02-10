@@ -1,5 +1,96 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &421137990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 421137992}
+  - component: {fileID: 421137991}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &421137992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421137990}
+  m_LocalRotation: {x: 0.2219351, y: 0.5606731, z: -0.15918307, w: 0.7816977}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7600878891878642303}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 31.7, y: 71.3, z: 0}
+--- !u!108 &421137991
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421137990}
+  m_Enabled: 1
+  serializedVersion: 9
+  m_Type: 1
+  m_Color: {r: 0.80784315, g: 0.8666667, b: 0.9372549, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &2207590490359507606
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,12 +135,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: -5.071696, y: -46.54724, z: 0}
-  - {x: -1.5956492, y: -46.54724, z: 63.729313}
-  - {x: 20.985054, y: -34.597687, z: 99.09181}
-  - {x: 56.17182, y: -18.716858, z: 119.352234}
-  - {x: 96.840866, y: -2.0801697, z: 119.352234}
-  - {x: 137.13521, y: 0, z: 128.61702}
+  - {x: -5.071696, y: -46, z: 0}
+  - {x: -5.071696, y: -46, z: 63.729313}
+  - {x: 20.985054, y: -34.597687, z: 95.11338}
+  - {x: 56.17182, y: -18.716858, z: 112.75404}
+  - {x: 96.840866, y: -2.0801697, z: 120.15089}
+  - {x: 137.13521, y: 0, z: 135.78175}
   - {x: 171.8964, y: 0, z: 151.79117}
   - {x: 215.92734, y: 0, z: 195.82207}
   - {x: 249.12236, y: 0, z: 198.13954}
@@ -70,17 +161,20 @@ MonoBehaviour:
   - {x: 413.65906, y: 0, z: -272.29626}
   - {x: 385.85016, y: 0, z: -274.61368}
   - {x: 348.7713, y: 0, z: -279.24854}
-  - {x: 281.56625, y: 0, z: -248.8317}
-  - {x: 265.3444, y: 0, z: -212.16615}
-  - {x: 230.58302, y: 0, z: -177.27452}
-  - {x: 198.13914, y: 0, z: -168.4261}
-  - {x: 147.15611, y: 0, z: -177.69577}
-  - {x: 105.9126, y: 0, z: -196.2351}
-  - {x: 59.09423, y: -14.217651, z: -202.77374}
+  - {x: 326.71246, y: -15.983551, z: -275.15198}
+  - {x: 283.77847, y: -35.160675, z: -264.0476}
+  - {x: 249.01709, y: -61.93933, z: -256.4201}
+  - {x: 187.82585, y: -47.95288, z: -250.0608}
+  - {x: 147.15611, y: -47.95288, z: -240.95474}
+  - {x: 105.9126, y: -23.78189, z: -226.43193}
+  - {x: 77.898224, y: -26.854492, z: -202.77374}
   - {x: 33.602623, y: -32.462463, z: -174.9647}
-  - {x: -1.5956492, y: -38.58719, z: -103.12477}
-  - {x: -5.071696, y: -46.54724, z: 0}
-  modes: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  - {x: 10.931412, y: -45.127663, z: -148.7222}
+  - {x: -5.071696, y: -46, z: -90.70729}
+  - {x: -5.28426, y: -46, z: -67.99535}
+  - {x: -5.220438, y: -46, z: -20.985504}
+  - {x: -5.071696, y: -46, z: 0}
+  modes: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1 &7600878891878642302
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +204,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1176283515755522469}
+  - {fileID: 421137992}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -127,16 +222,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelBaseSpline: {fileID: 6124440673169400227}
   roadWidth: 35
-  groundWidth: 150
+  groundWidth: 140
   roadMaterial: {fileID: 2100000, guid: ee18013b71b78a342baad4cdfb8b295b, type: 2}
-  groundMaterial: {fileID: 2100000, guid: ccc98d4679bf8494d942a212c11fe67a, type: 2}
-  skyboxMaterial: {fileID: 2100000, guid: c3cb4ff8498f24800bed3ab4370af0ac, type: 2}
-  MaxLaps: 4
-  carPrefabs:
-  - {fileID: 100042, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
-  aiCarPrefabs:
-  - {fileID: 100064, guid: 0fb4610dba67fc24cb2a6674fb155fc1, type: 3}
-  bonusPrefabs: []
+  groundMaterial: {fileID: 2100000, guid: 85dd29661ea250f4eb16bad54be7447b, type: 2}
+  skyboxMaterial: {fileID: 2100000, guid: 65d3da4941f6640f5affd14afc45ebc2, type: 2}
+  MaxLaps: 5
+  roadLinePrefab: {fileID: 4132304012056491893, guid: d19d5079357f9ef48b12581ea4c6b8bb,
+    type: 3}
   finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
     type: 3}
-  turnSignPrefab: {fileID: 0}

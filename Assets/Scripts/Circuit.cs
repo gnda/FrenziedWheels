@@ -4,9 +4,10 @@ using DefaultNamespace;
 using UnityEngine;
 using SDD.Events;
 using Spline;
-using UnityStandardAssets.Cameras;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using RenderSettings = UnityEngine.RenderSettings;
 
 public class Circuit : MonoBehaviour, IEventHandler
 {
@@ -16,7 +17,6 @@ public class Circuit : MonoBehaviour, IEventHandler
     [SerializeField] private BezierSpline levelBaseSpline;
     [SerializeField] private int roadWidth;
     [SerializeField] private int groundWidth;
-    public BezierSpline LevelBaseSpline => levelBaseSpline;
     [SerializeField] private Material roadMaterial;
     [SerializeField] private Material groundMaterial;
     [SerializeField] private Material skyboxMaterial;
@@ -24,14 +24,10 @@ public class Circuit : MonoBehaviour, IEventHandler
     [Header(("LevelSettings"))] 
     [SerializeField] public int MaxLaps = 1;
 
-    [Header(("LevelGeneralPrefabs"))]
-    [SerializeField] private GameObject[] carPrefabs;
-    [SerializeField] private GameObject[] aiCarPrefabs;
-    [SerializeField] private GameObject[] bonusPrefabs;
-    
     [Header(("ScenePrefabs"))]
+    [SerializeField] private GameObject roadLinePrefab;
     [SerializeField] private GameObject finishingLinePrefab;
-    [SerializeField] private GameObject turnSignPrefab;
+    
     #endregion
 
     #region Events' subscription
@@ -85,23 +81,40 @@ public class Circuit : MonoBehaviour, IEventHandler
         
         //Generate Road
         roadGO = GenerateElementFromSpline("Road", roadWidth, roadMaterial);
-        WaypointCircuit wpc = RetrieveWaypointsFromSpline(roadGO, levelBaseSpline, 50);
+        RetrieveWaypointsFromSpline(roadGO, levelBaseSpline, 50);
         roadGO.tag = "Road";
+        GenerateRoadLines();
+
+        //Generating limits objects for each sides
+        GenerateLimits(10);
+
+        Vector3 splineFirstPoint = levelBaseSpline.GetPoint(0);
         
-        //Adding Finishing Line
-        finishingLineGO =  Instantiate(finishingLinePrefab, levelElements.transform);
-        finishingLineGO.transform.position = new Vector3(0,0.01f,0);
+        //Adding Finishing Line and Finish Box
+        GameObject finishBoxGO = new GameObject("FinishBox");
+        finishBoxGO.transform.parent = levelElements.transform;
+        finishBoxGO.transform.tag = "Finish";
+        finishBoxGO.transform.position = 
+            new Vector3(splineFirstPoint.x,splineFirstPoint.y + 20,0);
+        BoxCollider b = finishBoxGO.AddComponent<BoxCollider>();
+        b.size = new Vector3(groundWidth,45,roadWidth/10f);
+        b.isTrigger = true;
+
+        finishingLineGO = Instantiate(finishingLinePrefab, levelElements.transform);
+        finishingLineGO.transform.position = 
+            new Vector3(splineFirstPoint.x,splineFirstPoint.y + 0.01f,0);
         finishingLineGO.transform.localScale += new Vector3(0,0,roadWidth/10f);
         finishingLineGO.transform.Rotate(0,-90,0);
         
         //Generate start positions
-        List<Vector3> startPositions = GenerateStartPositions();
+        List<Vector3> startPositions = GenerateStartPositions(splineFirstPoint);
         Vector3 playerStartPosition = 
             startPositions[Random.Range(0, startPositions.Count)];
         startPositions.Remove(playerStartPosition);
 
         //Add player
-        GameObject playerGO = Instantiate(carPrefabs[0], playerStartPosition, 
+        GameObject playerGO = Instantiate(
+            GameManager.Instance.GetSelectedCar(), playerStartPosition, 
             Quaternion.identity, carsGO.transform);
         playerGO.tag = "Player";
         playerGO.AddComponent<Player>();
@@ -111,7 +124,9 @@ public class Circuit : MonoBehaviour, IEventHandler
         for (int i = 0; i < GameManager.Instance.NumberOfCars - 1; i++)
         {
             GameObject carGO = Instantiate(
-                aiCarPrefabs[Random.Range(0, carPrefabs.Length)], startPositions[i], 
+                GameManager.Instance.AiCarPrefabs[
+                    Random.Range(0, GameManager.Instance.AiCarPrefabs.Length)
+                ], startPositions[i], 
                 Quaternion.identity, carsGO.transform);
             carGO.AddComponent<Racer>();
         }
@@ -119,21 +134,25 @@ public class Circuit : MonoBehaviour, IEventHandler
         EventManager.Instance.Raise(new CircuitHasBeenInstantiatedEvent());
     }
 
-    private GameObject GenerateElementFromSpline(String name, int width, Material mat)
+    private GameObject GenerateElementFromSpline(String name, 
+        int width, Material mat = null, float xOffset = 0)
     {
         GameObject elementGO = new GameObject(name);
         elementGO.transform.SetParent(levelElements.transform);
         MeshFilter elementMF = elementGO.AddComponent<MeshFilter>();
         MeshRenderer elementMR = elementGO.AddComponent<MeshRenderer>();
         elementMF.sharedMesh = MeshGenerator.
-            ExtrudeMeshAlongSpline(levelBaseSpline, width);
-        elementMR.material = mat;
+            ExtrudeMeshAlongSpline(levelBaseSpline, width, xOffset);
+        if (mat != null)
+        {
+            elementMR.material = mat;
+        }
         elementGO.AddComponent<MeshCollider>();
 
         return elementGO;
     }
     
-    public static WaypointCircuit RetrieveWaypointsFromSpline(GameObject go, 
+    private void RetrieveWaypointsFromSpline(GameObject go, 
         BezierSpline spline, int steps = 100)
     {
         WaypointCircuit wpc = go.AddComponent<WaypointCircuit>();
@@ -154,11 +173,9 @@ public class Circuit : MonoBehaviour, IEventHandler
         
         wpc.numPoints = wpc.Waypoints.Length;
         wpc.CachePositionsAndDistances();
-
-        return wpc;
     }
 
-    private List<Vector3> GenerateStartPositions()
+    private List<Vector3> GenerateStartPositions(Vector3 splineFirstPoint)
     {
         List<Vector3> startPositions = new List<Vector3>();
         int numberOfCars = GameManager.Instance.NumberOfCars;
@@ -169,12 +186,65 @@ public class Circuit : MonoBehaviour, IEventHandler
             {
                 if (startPositions.Count == numberOfCars)
                     return startPositions;
-                Vector3 newPosition = new Vector3( j * 4, 0, -i * 8);
+                Vector3 newPosition = 
+                    new Vector3( splineFirstPoint.x + j * 4, splineFirstPoint.y, -i * 8);
                 startPositions.Add(newPosition);
             }
         }
 
         return startPositions;
+    }
+
+    private void GenerateRoadLines(int spacing = 160)
+    {
+        GameObject roadLinesGO = new GameObject("Road Lines");
+        roadLinesGO.transform.parent = levelElements.transform;
+        for(int i = 0; i < spacing; i++)
+        {
+            GameObject roadLineGO = 
+                Instantiate(roadLinePrefab, roadLinesGO.transform);
+            Vector3 position = roadLineGO.transform.position;
+            
+            position = levelBaseSpline.GetPoint((float) i/spacing);
+            Vector3 relativePos =
+                levelBaseSpline.GetPoint(((float) i + 1) / spacing) - position;
+            position += new Vector3(0,0.15f,0);
+            
+            roadLineGO.transform.position = position;
+            roadLineGO.transform.rotation = 
+                Quaternion.LookRotation(relativePos, Vector3.up);
+        }
+    }
+    
+    //Number of limits increases the duplication of limits on y axis
+    private void GenerateLimits(int numberOfLimits, int width = 5)
+    {
+        //Generate Terrain Limits
+        GameObject allLimitsGO = new GameObject("AllLimits");
+        allLimitsGO.transform.parent = levelElements.transform;
+
+        for (int i = 0; i < numberOfLimits; i++)
+        {
+            GameObject limitsGO = new GameObject("Limits");
+            limitsGO.transform.parent = allLimitsGO.transform;
+            limitsGO.transform.tag = "Limits";
+            
+            GameObject leftLimitsGO = GenerateElementFromSpline("LeftLimit", width, 
+                null, .5f * groundWidth/2f);
+            leftLimitsGO.transform.parent = limitsGO.transform;
+            Destroy(leftLimitsGO.GetComponent<MeshFilter>());
+            Destroy(leftLimitsGO.GetComponent<MeshRenderer>());
+            
+            GameObject rightLimitsGO = GenerateElementFromSpline("RightLimit", width, 
+                null, -.5f * groundWidth/2f);
+            rightLimitsGO.transform.parent = limitsGO.transform;
+            Destroy(rightLimitsGO.GetComponent<MeshFilter>());
+            Destroy(rightLimitsGO.GetComponent<MeshRenderer>());
+        
+            limitsGO.transform.position += new Vector3(0,1.5f * i,0);
+        }
+        
+        allLimitsGO.transform.position += new Vector3(0,0.5f,0);
     }
     #endregion
 }

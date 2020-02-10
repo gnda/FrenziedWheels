@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 3300002}
   - component: {fileID: 2300002}
   m_Layer: 0
-  m_Name: SkyCarComponents
+  m_Name: CarComponents
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
   m_Layer: 0
-  m_Name: SkyCarBody
+  m_Name: CarBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -449,7 +449,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1c3b1c2f9c2c40746b55545855d8b3c9, type: 2}
+  - {fileID: 2100000, guid: d425c5c4cb38fd44f95b13e9f94575c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 3300016}
   - component: {fileID: 2300016}
   m_Layer: 0
-  m_Name: SkyCarSuspensionFrontRight
+  m_Name: CarSuspensionFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 3300006}
   - component: {fileID: 2300006}
   m_Layer: 0
-  m_Name: SkyCarSuspensionFrontLeft
+  m_Name: CarSuspensionFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 11400004}
   - component: {fileID: 11400000}
   m_Layer: 0
-  m_Name: SkyCarMudGuardFrontRight
+  m_Name: CarMudGuardFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1288,7 +1288,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1341,7 +1341,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1394,7 +1394,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -1447,7 +1447,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -6390,7 +6390,7 @@ GameObject:
   - component: {fileID: 11400008}
   - component: {fileID: 11400006}
   m_Layer: 0
-  m_Name: SkyCarMudGuardFrontLeft
+  m_Name: CarMudGuardFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6511,7 +6511,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.616204, y: 0, z: 254.71234}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400038}
@@ -6614,7 +6614,7 @@ MonoBehaviour:
   lowPitchMin: 1
   lowPitchMax: 5
   highPitchMultiplier: 0.25
-  maxRolloffDistance: 100
+  maxRolloffDistance: 250
   dopplerLevel: 1
   useDoppler: 1
 --- !u!114 &-6341932578326553656
@@ -6651,7 +6651,7 @@ GameObject:
   - component: {fileID: 3300012}
   - component: {fileID: 2300012}
   m_Layer: 0
-  m_Name: SkyCarWheelRearRight
+  m_Name: CarWheelRearRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6729,7 +6729,7 @@ GameObject:
   - component: {fileID: 3300020}
   - component: {fileID: 2300020}
   m_Layer: 0
-  m_Name: SkyCarWheelRearLeft
+  m_Name: CarWheelRearLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6807,7 +6807,7 @@ GameObject:
   - component: {fileID: 3300024}
   - component: {fileID: 2300024}
   m_Layer: 0
-  m_Name: SkyCarWheelFrontRight
+  m_Name: CarWheelFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6885,7 +6885,7 @@ GameObject:
   - component: {fileID: 3300014}
   - component: {fileID: 2300014}
   m_Layer: 0
-  m_Name: SkyCarWheelFrontLeft
+  m_Name: CarWheelFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6963,7 +6963,7 @@ GameObject:
   - component: {fileID: 3300008}
   - component: {fileID: 2300008}
   m_Layer: 0
-  m_Name: SkyCarHeadLightsGlow
+  m_Name: CarHeadLightsGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7042,7 +7042,7 @@ GameObject:
   - component: {fileID: 2300022}
   - component: {fileID: 11400010}
   m_Layer: 0
-  m_Name: SkyCarBrakeLightsGlow
+  m_Name: CarBrakeLightsGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7131,7 +7131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400056}
   m_Layer: 0
-  m_Name: SkyCar
+  m_Name: Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

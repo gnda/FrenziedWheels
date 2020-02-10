@@ -9,7 +9,7 @@ public class Car : MonoBehaviour
     {
         // Randomize car color
         if (GetComponent<Player>() == null)
-            transform.Find("SkyCar").Find("SkyCarBody").
+            transform.Find("Car").Find("CarBody").
                     GetComponent<MeshRenderer>().sharedMaterial =
                         Palettes[Random.Range(0, Palettes.Length)];
     }

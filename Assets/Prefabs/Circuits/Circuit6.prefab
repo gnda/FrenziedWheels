@@ -1,5 +1,96 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1014991207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1014991209}
+  - component: {fileID: 1014991208}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1014991209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014991207}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7600878891878642303}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!108 &1014991208
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014991207}
+  m_Enabled: 1
+  serializedVersion: 9
+  m_Type: 1
+  m_Color: {r: 0.11764706, g: 0.44313726, b: 0.4745098, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &4725803584385971583
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,24 +135,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: 0, y: 0, z: 0}
-  - {x: -1.3258144, y: 0, z: 67.614914}
-  - {x: -1.3258144, y: 0, z: 110.03981}
-  - {x: -3.9773402, y: 0, z: 144.50995}
-  - {x: -1.3258144, y: 0, z: 173.67706}
-  - {x: 20.168695, y: 0, z: 197.90074}
-  - {x: 74.12895, y: 0, z: 200.35669}
-  - {x: 102.08482, y: 0, z: 177.93062}
-  - {x: 104.736244, y: 0, z: 138.15733}
-  - {x: 99.4332, y: 0, z: 104.73665}
-  - {x: 99.4332, y: 0, z: 62.311817}
-  - {x: 99.4332, y: 0, z: 19.886997}
-  - {x: 99.4332, y: 0, z: -33.14404}
-  - {x: 99.4332, y: 0, z: -33.14404}
-  - {x: 99.4332, y: 0, z: -59.659576}
-  - {x: 99.4332, y: 0, z: -104.73598}
-  - {x: 99.4332, y: 0, z: -131.25146}
-  - {x: 96.78177, y: 0, z: -165.72166}
+  - {x: -69.12262, y: 0, z: 0}
+  - {x: -70.44843, y: 0, z: 67.614914}
+  - {x: -64.809135, y: 0, z: 110.03981}
+  - {x: -58.215378, y: 0, z: 144.50995}
+  - {x: -56.24018, y: 0, z: 178.72806}
+  - {x: -49.650993, y: 0, z: 263.05215}
+  - {x: -23.607697, y: 0, z: 306.18628}
+  - {x: 13.297188, y: 0, z: 322.93835}
+  - {x: 67.93497, y: -16.260101, z: 318.51874}
+  - {x: 96.64343, y: -26.53955, z: 276.245}
+  - {x: 106.17169, y: -41.312225, z: 200.45108}
+  - {x: 100.04299, y: -46.218994, z: 73.53765}
+  - {x: 99.4332, y: -46.58873, z: -13.150612}
+  - {x: 97.900665, y: -45.067215, z: -42.357666}
+  - {x: 98.959526, y: -39.957184, z: -73.2061}
+  - {x: 99.4332, y: -33.562164, z: -104.73598}
+  - {x: 99.4332, y: -22.017609, z: -139.53162}
+  - {x: 96.78177, y: -8.01384, z: -165.72166}
   - {x: 96.78177, y: 0, z: -210.79807}
   - {x: 99.4332, y: 0, z: -232.01048}
   - {x: 102.08482, y: 0, z: -258.52597}
@@ -70,15 +161,15 @@ MonoBehaviour:
   - {x: 160.419, y: 0, z: -295.64774}
   - {x: 189.5861, y: 0, z: -277.08685}
   - {x: 197.54079, y: 0, z: -245.26823}
-  - {x: 197.54079, y: 0, z: -202.8434}
-  - {x: 197.54079, y: 0, z: -171.02475}
-  - {x: 194.88916, y: 0, z: -125.94839}
-  - {x: 197.54079, y: 0, z: -94.12977}
-  - {x: 197.54079, y: 0, z: -49.053368}
-  - {x: 194.88916, y: 0, z: 35.79632}
-  - {x: 194.88916, y: 0, z: 78.22115}
-  - {x: 194.88916, y: 0, z: 115.342896}
-  - {x: 200.1922, y: 0, z: 157.76773}
+  - {x: 197.54079, y: 27.29361, z: -202.8434}
+  - {x: 197.54079, y: 42.025482, z: -171.02475}
+  - {x: 194.88916, y: 66.536255, z: -125.94839}
+  - {x: 197.54079, y: 76.49997, z: -94.12977}
+  - {x: 197.54079, y: 84.894135, z: -49.053368}
+  - {x: 194.88916, y: 84.894135, z: 1.4986458}
+  - {x: 194.88916, y: 63.37326, z: 61.001694}
+  - {x: 194.88916, y: 23.136597, z: 115.342896}
+  - {x: 200.1922, y: 5.380432, z: 157.76773}
   - {x: 221.40462, y: 0, z: 186.93484}
   - {x: 241.48044, y: 0, z: 194.88947}
   - {x: 261.178, y: 0, z: 192.23793}
@@ -97,13 +188,13 @@ MonoBehaviour:
   - {x: 407.01328, y: 0, z: -155.11546}
   - {x: 433.52893, y: 0, z: -157.767}
   - {x: 455.7681, y: 0, z: -173.67633}
-  - {x: 473.8495, y: 0, z: -189.58562}
-  - {x: 486.55988, y: 0, z: -208.14648}
-  - {x: 486.55988, y: 0, z: -245.26823}
-  - {x: 483.90845, y: 0, z: -285.0415}
-  - {x: 475.95377, y: 0, z: -316.86014}
-  - {x: 430.87732, y: 0, z: -327.46637}
-  - {x: 409.66492, y: 0, z: -308.90552}
+  - {x: 485.09674, y: 0, z: -189.58562}
+  - {x: 513.7382, y: 0, z: -208.14648}
+  - {x: 529.0627, y: 0, z: -269.79706}
+  - {x: 522.84186, y: 0, z: -326.1856}
+  - {x: 469.77423, y: 0, z: -361.619}
+  - {x: 430.5201, y: 0, z: -368.71484}
+  - {x: 402.56784, y: 0, z: -323.9397}
   - {x: 385.80087, y: 0, z: -271.78375}
   - {x: 353.98236, y: 0, z: -245.26823}
   - {x: 322.16364, y: 0, z: -245.26823}
@@ -115,14 +206,14 @@ MonoBehaviour:
   - {x: 200.1922, y: 0, z: -391.1036}
   - {x: 168.37369, y: 0, z: -396.4067}
   - {x: 123.29723, y: 0, z: -393.75516}
-  - {x: 78.22078, y: 0, z: -380.4974}
-  - {x: 41.09901, y: 0, z: -338.07254}
-  - {x: 17.235174, y: 0, z: -290.34464}
-  - {x: -1.3258144, y: 0, z: -255.87445}
-  - {x: -9.280392, y: 0, z: -202.8434}
-  - {x: -9.280392, y: 0, z: -147.1608}
-  - {x: -3.4861412, y: 0, z: -110.039055}
-  - {x: 0, y: 0, z: 0}
+  - {x: 14.1017, y: 0, z: -380.4974}
+  - {x: -23.02007, y: 0, z: -338.07254}
+  - {x: -46.883904, y: 0, z: -290.34464}
+  - {x: -59.125072, y: 0, z: -255.87445}
+  - {x: -67.07965, y: 0, z: -202.8434}
+  - {x: -71.273834, y: 0, z: -147.1608}
+  - {x: -71.263, y: 0, z: -110.039055}
+  - {x: -67.776855, y: 0, z: 0}
   modes: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1 &7600878891878642302
 GameObject:
@@ -153,6 +244,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4136258839904260097}
+  - {fileID: 1014991209}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -170,16 +262,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelBaseSpline: {fileID: 6345659691923042961}
   roadWidth: 35
-  groundWidth: 150
-  roadMaterial: {fileID: 2100000, guid: ee18013b71b78a342baad4cdfb8b295b, type: 2}
-  groundMaterial: {fileID: 2100000, guid: ccc98d4679bf8494d942a212c11fe67a, type: 2}
-  skyboxMaterial: {fileID: 2100000, guid: c3cb4ff8498f24800bed3ab4370af0ac, type: 2}
-  MaxLaps: 4
-  carPrefabs:
-  - {fileID: 100042, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
-  aiCarPrefabs:
-  - {fileID: 100064, guid: 0fb4610dba67fc24cb2a6674fb155fc1, type: 3}
-  bonusPrefabs: []
+  groundWidth: 130
+  roadMaterial: {fileID: 2100000, guid: 5d1e0be8aa17b9b498104abd0e43ed3d, type: 2}
+  groundMaterial: {fileID: 2100000, guid: 7f28e7fed996aa54d858b31ac6e052b6, type: 2}
+  skyboxMaterial: {fileID: 2100000, guid: 8e0dbbb3ffcf0401f97b4722ac49f215, type: 2}
+  MaxLaps: 3
+  roadLinePrefab: {fileID: 4132304012056491893, guid: d19d5079357f9ef48b12581ea4c6b8bb,
+    type: 3}
   finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
     type: 3}
-  turnSignPrefab: {fileID: 0}

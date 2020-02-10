@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using SDD.Events;
 using UnityEngine.UI;
-using Event = SDD.Events.Event;
+using UnityStandardAssets.Cameras;
+using UnityStandardAssets.Vehicles.Car;
 
 public class MenuManager : Manager<MenuManager>
 {
@@ -16,15 +18,18 @@ public class MenuManager : Manager<MenuManager>
     [SerializeField] GameObject panelVictory;
     [SerializeField] GameObject panelGameOver;
     [SerializeField] GameObject panelCredits;
+    [SerializeField] GameObject panelCountdown;
     
     [Header("Fields")]
     [SerializeField] Text txtVictoryPlayer;
-    [SerializeField] Text txtNumberOfCars;
+    [SerializeField] Slider sliderNumberOfCars;
+    [SerializeField] Text txtCarAmount;
 
-    public Text TxtNumberOfCars => txtNumberOfCars;
+    public int NumberOfCars => (int) sliderNumberOfCars.value;
 
     [Header("Settings")]
     [SerializeField] float creditsDuration;
+    [SerializeField] private Transform carModelPosition;
 
     List<GameObject> allPanels;
     #endregion
@@ -40,6 +45,7 @@ public class MenuManager : Manager<MenuManager>
         
         //GameManager
         EventManager.Instance.AddListener<GoToNextCircuitEvent>(GoToNextCircuit);
+        EventManager.Instance.AddListener<DisplayCountdownEvent>(DisplayCountdown);
 
         //Car selection
         EventManager.Instance.AddListener<PlayButtonClickedEvent>(PlayButtonClicked);
@@ -54,6 +60,7 @@ public class MenuManager : Manager<MenuManager>
         
         //GameManager
         EventManager.Instance.RemoveListener<GoToNextCircuitEvent>(GoToNextCircuit);
+        EventManager.Instance.RemoveListener<DisplayCountdownEvent>(DisplayCountdown);
 
         //Car selection
         EventManager.Instance.RemoveListener<PlayButtonClickedEvent>(PlayButtonClicked);
@@ -115,6 +122,7 @@ public class MenuManager : Manager<MenuManager>
         allPanels.Add(panelVictory);
         allPanels.Add(panelGameOver);
         allPanels.Add(panelCredits);
+        allPanels.Add(panelCountdown);
     }
 
     void OpenPanel(GameObject panel)
@@ -137,6 +145,16 @@ public class MenuManager : Manager<MenuManager>
             if (item)
                 item.SetActive(item == modal);
     }
+
+    void DisplayModelCar()
+    {
+        foreach (Transform child in carModelPosition) {
+            Destroy(child.gameObject);
+        }
+        GameObject carPrefab = GameManager.Instance.GetSelectedCar();
+        GameObject carGO = Instantiate(carPrefab, carModelPosition);
+        GameManager.Instance.DisableCarComponents(carGO);
+    }
     #endregion
 
     
@@ -151,16 +169,49 @@ public class MenuManager : Manager<MenuManager>
 
     public void MainMenuButtonHasBeenClicked()
     {
+        foreach (Transform child in carModelPosition) {
+            Destroy(child.gameObject);
+        }
+        FindObjectOfType<AutoCam>().transform.position = Vector3.zero;
+        FindObjectOfType<AutoCam>().transform.rotation = Quaternion.identity;
         EventManager.Instance.Raise(new MainMenuButtonClickedEvent());
+    }
+    
+    public void PreviousCarButtonHasBeenClicked()
+    {
+        GameManager.Instance.playerCarIndex--;
+        DisplayModelCar();
+    }
+    
+    public void NextCarButtonHasBeenClicked()
+    {
+        GameManager.Instance.playerCarIndex++;
+        DisplayModelCar();
+    }
+    
+    public void CarAmountHasBeenChanged()
+    {
+        txtCarAmount.text = sliderNumberOfCars.value.ToString();
     }
 
     public void CircuitButtonHasBeenClicked()
     {
+        FindObjectOfType<AutoCam>().enabled = true;
+        carModelPosition.gameObject.SetActive(false);
+        foreach (Transform child in carModelPosition) {
+            Destroy(child.gameObject);
+        }
+        FindObjectOfType<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
         EventManager.Instance.Raise(new CircuitButtonClickedEvent());
     }
 
     public void PlayButtonHasBeenClicked()
     {
+        FindObjectOfType<AutoCam>().enabled = false;
+        carModelPosition.gameObject.SetActive(true);
+        DisplayModelCar();
+        FindObjectOfType<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+        FindObjectOfType<Canvas>().planeDistance = 50;
         EventManager.Instance.Raise(new PlayButtonClickedEvent());
     }
     
@@ -171,6 +222,8 @@ public class MenuManager : Manager<MenuManager>
 
     public void NextCircuitButtonHasBeenClicked()
     {
+        FindObjectOfType<AutoCam>().transform.position = Vector3.zero;
+        FindObjectOfType<AutoCam>().transform.rotation = Quaternion.identity;
         EventManager.Instance.Raise(new NextCircuitButtonClickedEvent());
     }
 
@@ -200,6 +253,36 @@ public class MenuManager : Manager<MenuManager>
     {
         EventManager.Instance.Raise(new CircuitThreeButtonClickedEvent());
     }
+    
+    public void CircuitFourButtonHasBeenClicked()
+    {
+        EventManager.Instance.Raise(new CircuitFourButtonClickedEvent());
+    }
+    
+    public void CircuitFiveButtonHasBeenClicked()
+    {
+        EventManager.Instance.Raise(new CircuitFiveButtonClickedEvent());
+    }
+    
+    public void CircuitSixButtonHasBeenClicked()
+    {
+        EventManager.Instance.Raise(new CircuitSixButtonClickedEvent());
+    }
+    
+    public void CircuitSevenButtonHasBeenClicked()
+    {
+        EventManager.Instance.Raise(new CircuitSevenButtonClickedEvent());
+    }
+    
+    public void CircuitEightButtonHasBeenClicked()
+    {
+        EventManager.Instance.Raise(new CircuitEightButtonClickedEvent());
+    }
+    
+    public void CircuitNineButtonHasBeenClicked()
+    {
+        EventManager.Instance.Raise(new CircuitNineButtonClickedEvent());
+    }
     #endregion
     
     
@@ -218,6 +301,16 @@ public class MenuManager : Manager<MenuManager>
     }
     #endregion
 
+    
+    // Callbacks to GameManager UI events
+    
+    
+    protected void DisplayCountdown(DisplayCountdownEvent e)
+    {
+        OpenPanel(panelCountdown);
+    }
+    
+    
     // Callbacks to GameManager events
     
     

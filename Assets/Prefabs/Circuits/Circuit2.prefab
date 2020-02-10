@@ -1,5 +1,96 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &204800444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 204800446}
+  - component: {fileID: 204800445}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &204800446
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204800444}
+  m_LocalRotation: {x: 0.15038373, y: 0.4924039, z: -0.08682408, w: 0.85286856}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3622923082333416380}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 20, y: 60, z: 0}
+--- !u!108 &204800445
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204800444}
+  m_Enabled: 1
+  serializedVersion: 9
+  m_Type: 1
+  m_Color: {r: 1, g: 0.5137255, b: 0, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &3622923082333416381
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,6 +120,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4102848390844101444}
+  - {fileID: 204800446}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46,19 +138,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelBaseSpline: {fileID: 304249358762205381}
   roadWidth: 35
-  groundWidth: 150
+  groundWidth: 130
   roadMaterial: {fileID: 2100000, guid: 2c9b40502215e654394311b24e518fa4, type: 2}
   groundMaterial: {fileID: 2100000, guid: 2cddca58e8be04c46863287409b1de01, type: 2}
   skyboxMaterial: {fileID: 2100000, guid: 5ccb8522ec84149389086cf95fce26f9, type: 2}
   MaxLaps: 3
-  carPrefabs:
-  - {fileID: 100042, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
-  aiCarPrefabs:
-  - {fileID: 100064, guid: 0fb4610dba67fc24cb2a6674fb155fc1, type: 3}
-  bonusPrefabs: []
+  roadLinePrefab: {fileID: 4132304012056491893, guid: d19d5079357f9ef48b12581ea4c6b8bb,
+    type: 3}
   finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
     type: 3}
-  turnSignPrefab: {fileID: 0}
 --- !u!1 &7057958815128963311
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points:
   - {x: 0.48553467, y: 0, z: 16.918049}
-  - {x: 0.91360474, y: 0, z: 44.45454}
+  - {x: 0.4855347, y: 0, z: 44.45454}
   - {x: 0.51716614, y: 0, z: 58.543823}
   - {x: 1.3650665, y: 0, z: 85.67614}
   - {x: 0.51716614, y: 0, z: 111.11267}
@@ -168,7 +256,7 @@ MonoBehaviour:
   - {x: 35.333298, y: 0, z: -153.46698}
   - {x: 14.034958, y: 0, z: -127.86311}
   - {x: 1.4789886, y: 0, z: -112.273285}
-  - {x: -0.026460648, y: 0, z: -72.264755}
-  - {x: -1.1192017, y: 0, z: -31.450153}
-  - {x: 0.48553467, y: 0, z: 16.918049}
+  - {x: 1.5782757, y: 0, z: -72.264755}
+  - {x: 0.4855347, y: 0, z: -31.450153}
+  - {x: 0.4855347, y: 0, z: 16.918049}
   modes: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

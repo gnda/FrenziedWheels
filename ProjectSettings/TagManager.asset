@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Road
   - Ground
+  - Limits
   layers:
   - Default
   - TransparentFX

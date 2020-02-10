@@ -38,8 +38,8 @@ Inspiré du jeu Horizon Chase, l'objectif de Frenzied Wheels est le même.
 On a 1 joueur et jusqu'à 19 adversaires (IA). Le joueur doit faire le nombre
 de tours indiqué et tenter de finir premier (si possible avec le meilleur temps).
 
-On peut choisir le nombre de voitures au total (pas encore limité à 19).
-Il y a 3 circuits différents pour le moments.
+On peut choisir le nombre de voitures au total (maximum 20 voitures avec le joueur inclus).
+Il y a 9 circuits différents pour le moment.
 
 Le joueur doit appuyer sur la touche haut pour accélérer et la touche bas pour 
 décélérer. Il peut également s'orienter horizontalement avec les touches gauche et droite.
@@ -49,39 +49,49 @@ Voici les touches tout au long du jeu :
  - les touches wasd (zqsd sur un clavier azerty) mais aussi les flèches directionnelles
    (haut,bas,gauche et droite) pour se déplacer
 
-Si le joueur ne termine pas premier, il devrait perdre (pour le moment).
-
--- Non Fonctionnel --
-
-Gestion de la position par rapport aux adversaires dans la course.
+Si toutes les voitures, hormis le joueur, terminent la course, le joueur perd.
 
 
 II - Remarques, bugs connus, améliorations possibles
 
 -- Bugs connus
 
-Le nombre de voiture n'est pas contrôlé pour le moment, on peut mettre des valeurs comme 0 
-(plante au lancement du circuit) ou 1000 (va générer beaucoup de voitures).
-Il n'y a pas de limite sur la map donc le joueur peut tomber.
-L'orientation verticale du joueur ne suit pas celle de la route.
-Quand il y a des montées, le joueur se cogne contre la route au lieu de suivre sa forme...
-Ainsi, le joueur peut traverser le mesh du terrain parfois et tomber dans le vide.
-J'ai voulu faire des courbes plus prononcées pour la route dans le 3ème niveau mais le rendu est mauvais.
-
+Malgré les limites (meshes) mises en place une voiture peut parfois tomber si elle outrepasse les limites en sautant assez haut...
+Parfois il faut faire marche arrière puis accélérer pour faire avancer la voiture en début de partie.
 
 -- Limitations
 
 J'ai eu du mal à placer des textures pour le mesh généré, ducoup j'ai utilisé des couleurs unies.
-La gestion de l'accélération n'est pas très réaliste.
-On peut "gagner" en touchant plusieurs fois la ligne de départ sans avoir fait les tours.
+Les courbes des splines que j'ai créées ne sont pas très lisses, ce qui crée des routes très angulaires
+parfois.
+L'éclairage global de la scène ne varie pas en fonction du niveau, il faudrait le recalculer après que le niveau soit généré.
+Le calcul de la position des voitures se fait en fonction du nombre de points de chemin (waypoints) atteint.
+Ainsi on peut tricher en passant plusieurs fois par les même points de chemin.
+On ne peut pas se retourner si on tombe à l'envers.
+Plus il y a de voitures, plus il y a de chances d'avoir un "carambolage"...
+
+-- Améliorations apportées
+
+ - Gestion du positionnement du joueur dans la course fonctionnnel
+ - voitures et IA fonctionnelles, reprises des "Standard assets"
+ - ajout de mesh de collision qui permettent de fixer des limites au terrain
+ - ajout d'assets graphiques et sonores (skyboxes et musiques)
+ - sélection de la voiture du joueur possible
+ - le nombre de voiture est limité par l'utilisation d'un slider
+ - ajout de 6 circuits
+ - réduction du far clip pour donner une sorte d'effet procédural
+  (en vrai ça cache les morceaux du circuit visibles au loin, certaines parties étant invisbles car on voit le dessous du circuit)
 
 -- Améliorations possibles
  
- - améliorer la maniabilité
- - programmer une IA plus poussée pour les voitures adverses
- - programmer une meilleure gestion des collisions
- - ajout du multijoueur local
- - amélioration de l'esthétique
+ - améliorer la maniabilité de la voiture
+ - retravailler les splines des circuits
+ - ajouter une mini-map pour suivre sa progression
+ - afficher les résultats en fin de course (meilleurs temps)
+ - indiqué si on est dans le sens opposé
+ - bloquer la marche arrière (forcer une progression que dans un seul sens)
+ - ajout d'un mode multijoueur
+ - amélioration de l'esthétique (retravailler l'éclairage global de la scène par exemple)
 
 
 III - Analyse technique
@@ -115,7 +125,7 @@ Pour créer et éditer mes splines je me suis servi du tutoriel "Curves and Spli
 J'ai adapté l'éditeur pour la création de mes splines :
 Je peux ajouter des points avec le clic gauche de la souris lorsque le bouton ("Add Points Mode") est enclenché.
 Je peux voir l'allure de la courbe grâce au bouton ("Draw Bezier Spline").
-J'ai également ajouté des cases à cocher pour bloquer certaines directions (x, y ou z) quand je place mes points.
+J'ai également ajouter des cases à cocher pour bloquer certaines directions (x, y ou z) quand je place mes points.
 
 J'ai rencontré de nombreuses difficultés au niveau de la génération de mon mesh, surtout au niveau des virages.
 Ainsi, je me suis principalement fondé sur la présentation de Joachim Holmer (Unite 2015) pour créer le mesh à partir d'une spline.
@@ -124,10 +134,25 @@ Grâce à la classe MeshGenerator et aux splines que j'ai créées, j'ai pu gén
 tout le long de la spline (ajout successif de triangles). Lors de cette extrusion, je précise la largeur de mon mesh et cela m'a été
 utile pour créer la route et le sol.
 
-L'IA programmée pour l'instant se déplaçe en suivant la forme de la spline, il faudrait ajouter plus de liberter de mouvement.
+J'ai voulu programmer la physique des voitures et l'IA moi-même, mais j'ai rencontré pas mal de difficultés si bien que j'ai préféré
+utiliser la voiture "SkyCar" fournie dans les "Standard Assets" d'Unity.
+J'ai donc adapté l'IA à mes splines pour qu'elle suive des points de chemins (waypoints) tout au long de la spline.
+Le résultat est plutôt satisfaisant car les voitures adverses suivent bien la route (en prenant quelques libertés parfois...)
+
+J'ai généré également des limites pour mes terrains en créant des meshes, à partir des splines, plus ou moins larges et décalés dont 
+j'ai récupéré les MeshColliders. J'ai donc pu placer ces MeshColliders à droite et à gauche de la route.
+J'ai créé ces meshes plusieurs fois verticalement pour éviter qu'une voiture traverses les limites trop facilement (en passant par dessus).
+Quand une voiture touche un mesh collider de limite, elle est replacée au dernier point de chemin qu'elle a visité.
+
 
 Ainsi, je me suis servi des liens suivants pour implémenter tout cela :
+
+HOW TO MAKE A DRIVING & RACING GAME IN UNITY C# TUTORIAL BEGINNER/INTERMEDIATE [FULL COURSE] : 
+https://www.youtube.com/watch?v=ehDRTdRGd1w
+
+Unite 2015 - A coder's guide to spline-based procedural geometry : 
 https://www.youtube.com/watch?v=o9RK6O2kOKo
+
 https://catlikecoding.com/unity/tutorials/curves-and-splines/
 https://fr.wikipedia.org/wiki/B-spline
 https://www.irif.fr/~carton/Enseignement/InterfacesGraphiques/MasterInfo/Cours/Swing/splines.html
@@ -141,6 +166,7 @@ Pour ce projet, je me suis servi de (ou j'ai modifié) :
    si on fait des profits en dessous de 100 000$ par an 
    licence : Unity Terms of Service.
    - "Skybox add-on" by Eclypso
+   - "Standard Assets" by Unity Technologies
 
  - assets trouvées sur : Opengameart.org
    - "Low Poly American Muscle Car" by T Allen Studios licensed CC-BY 4.0
@@ -150,8 +176,14 @@ Pour ce projet, je me suis servi de (ou j'ai modifié) :
 	https://www.facebook.com/BogartVGM/
   - "Miami Soul" by neocrey licensed CC-BY 3.0
   - "Neon Owl" by Zodik licensed CC-BY 3.0
-  - "Darker Waves" by Zander Noriega licensed CC-BY 3.0
 
+ - musiques trouvées sur : Youtube.com
+  - "Tears in The Rain" by MK Ultra licensed CC-BY 3.0
+  - "Drive Fast [Synthwave]" by Three Chain Links licensed CC-BY 3.0
+  - "失望した [Synthwave]" by Eva licensed CC-BY 3.0
+  - "Turbo Rush [Synthwave]" by Aries Beats licensed CC-BY 3.0
+  - "Hydrophase" by Metaphazic licensed CC-BY 3.0
+  - "Pyxis" by HOME licensed CC-BY 3.0
 
 V - Rôles dans ce projet
 
@@ -163,10 +195,15 @@ Dans ce projet je me suis focalisé sur les rôles suivants :
 
 Conclusion
 
-J'ai passé beaucoup de temps sur la partie génération de mesh à partir d'une spline car je n'ai pas compris de suite tout le contenu que j'ai consulté.
-Cela s'est fait au détriment de nombreux éléments de gameplay et d'éléments graphiques.
+J'ai passé beaucoup de temps sur la partie génération de mesh à partir d'une spline car je n'ai pas compris de suite le contenu que j'ai consulté.
+J'ai tenté d'implémenter une IA et la physique des voitures mais cela prennait trop de temps. Je me rends compte que l'usage d'assets est parfois nécessaire
+lorsqu'il faut se focaliser sur quelque chose (ici la brique technique) et ne pas perdre de temps en cherchant à tout faire soi-même.
 
 La partie génération de mesh à base de spline fonctionne au final, mais il reste pas mal d'améliorations possibles notamment au niveau des colliders et 
-au niveau de l'aspect du mesh.
+au niveau de l'aspect du mesh. L'IA fonctionne également, ce qui permet au joueur de jouer au jeu contre 19 adversaires au maximum. 
+Il a fallu adapter l'IA à la génération du mesh en calculant les points de chemin, à partir de la spline, qui lui sont nécessaires pour connaître le chemin à suivre.
 
 Certes, j'aurais passé beaucoup de temps à implémenter mes outils et la génération de mesh, mais cela m'a permis de comprendre pas mal de choses sur le sujet.
+L'utilisation de points de chemins pour le chemin suivi par l'IA me donne des idées pour le prochain projet à effectuer, notamment au niveau du déplacement des ennemis.
+
+Je tiens à m'excuser pour le retard dans le rendu, si tout cela n'est pas pris en compte, je comprends, mais cela m'auras au moins permis de mieux appréhender le prochain projet.

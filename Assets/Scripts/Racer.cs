@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SDD.Events;
 using UnityEngine;
-using UnityStandardAssets.Vehicles.Car;
+using UnityStandardAssets.Utility;
 
 namespace DefaultNamespace
 {
@@ -9,55 +11,56 @@ namespace DefaultNamespace
     {
         public int Laps { get; set; }
         public int Position { get; set; }
-        
-        public float CurrentDistance { get; set; }
-        public Vector3 StartPosition { get; set; }
         public float EndRaceTime { get; set; }
 
+        private List<Racer> sortedRacers;
         private Circuit currentCircuit;
-        private CarController currentCar;
-        private List<Racer> racers;
+        private WaypointCircuit wpc;
+
+        public int WaypointCount  { get; set; }
+        public Transform LastWaypoint { get; set; }
 
         private void Start()
         {
             currentCircuit = GameManager.Instance.CurrentCircuit;
-            currentCar = GetComponent<CarController>();
-            racers = GameManager.Instance.Racers;
-            CurrentDistance = 0;
-            StartPosition = transform.position;
+            wpc = currentCircuit.GetComponentInChildren<WaypointCircuit>();
+            sortedRacers = GameManager.Instance.Racers;
+            LastWaypoint = wpc.Waypoints[0];
         }
 
-        private float getCurrentPercProgression()
+        private void UpdatePosition()
         {
-            return (CurrentDistance / 
-                    currentCircuit.LevelBaseSpline.GetTotalLength()) * 100;
+            List<Transform> waypoints = wpc.Waypoints.ToList();
+            Transform nearestWaypoint = waypoints.Find(wp =>
+                Vector3.Distance(transform.position, wp.position) < 10f);
+            if ((nearestWaypoint != null) && (nearestWaypoint != LastWaypoint))
+            {
+                if (GetComponent<Player>() != null)
+                {
+                    sortedRacers.Sort(((r1, r2) => r2.Laps.CompareTo(r1.Laps)));
+                    sortedRacers.Sort(((r1, r2) => 
+                        wpc.Waypoints.ToList().IndexOf(r2.LastWaypoint)
+                            .CompareTo(wpc.Waypoints.ToList().IndexOf(r1.LastWaypoint))));
+                    Position = sortedRacers.IndexOf(this) + 1;
+                }
+                LastWaypoint = nearestWaypoint;
+                WaypointCount++;
+            }
         }
 
         private void Update()
         {
-            racers.Sort((r1, r2) => r1.CurrentDistance.CompareTo(r2.CurrentDistance));
-            Position = racers.IndexOf(this);
-            if (currentCar.CurrentSpeed > 0)
-            {
-                CurrentDistance += currentCar.CurrentSpeed * Time.deltaTime;
-            }
+            UpdatePosition();
         }
-
-        private void OnCollisionStay(Collision other)
+        
+        private void OnTriggerEnter(Collider other)
         {
-            if (other.collider.CompareTag("Road") && currentCar.CurrentSpeed > 0)
+            if (other.CompareTag("Finish"))
             {
-                CurrentDistance += currentCar.CurrentSpeed * Time.deltaTime;
-            }
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.collider.CompareTag("Finish"))
-            {
-                if (Laps < currentCircuit.MaxLaps)
+                if (Laps <= currentCircuit.MaxLaps)
                 {
-                    if ((Laps == 0) || getCurrentPercProgression() % 100 > 90)
+                    if ((Laps == 0) || 
+                        (WaypointCount > (wpc.Waypoints.Length*.5f) * Laps))
                     {
                         Laps++;
                     }
@@ -72,11 +75,25 @@ namespace DefaultNamespace
                             ePlayer = GetComponent<Player>()
                         });
                     }
-                    else
+                    else if (GameManager.Instance.
+                        Racers.FindAll(r => r.EndRaceTime > 0).Count == 
+                             GameManager.Instance.NumberOfCars - 1)
                     {
+                        // If everybody except player has finished the race
                         EventManager.Instance.Raise(new GameOverEvent());
                     }
                 }
+            }
+        }
+        
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.transform.parent.CompareTag("Limits"))
+            {
+                var position = LastWaypoint.position;
+                transform.position = position;
+                transform.rotation = 
+                    Quaternion.LookRotation(position, Vector3.up);
             }
         }
     }

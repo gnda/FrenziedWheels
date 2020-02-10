@@ -51,6 +51,7 @@ public class HudManager : Manager<HudManager>
 		base.SubscribeEvents();
 
 		//level
+		EventManager.Instance.AddListener<CircuitHasBeenInstantiatedEvent>(CircuitHasBeenInstantiated);
 		EventManager.Instance.AddListener<GameHasStartedEvent>(GameHasStarted);
 		EventManager.Instance.AddListener<GoToNextCircuitEvent>(GoToNextLevel);
 		
@@ -60,6 +61,7 @@ public class HudManager : Manager<HudManager>
 		base.UnsubscribeEvents();
 
 		//level
+		EventManager.Instance.RemoveListener<CircuitHasBeenInstantiatedEvent>(CircuitHasBeenInstantiated);
 		EventManager.Instance.RemoveListener<GameHasStartedEvent>(GameHasStarted);
 		EventManager.Instance.RemoveListener<GoToNextCircuitEvent>(GoToNextLevel);
 
@@ -67,7 +69,14 @@ public class HudManager : Manager<HudManager>
 	#endregion
 
 	#region Callbacks to Level events
-
+	private void CircuitHasBeenInstantiated(CircuitHasBeenInstantiatedEvent e)
+	{
+		txtLaps.text = "-/-";
+		txtPosition.text = "-/-";
+		txtSpeed.text = "-";
+		txtTime.text = "--:--:--";
+	}
+	
 	private void GoToNextLevel(GoToNextCircuitEvent e)
 	{
 		panelHUD.SetActive(true);
@@ -75,32 +84,6 @@ public class HudManager : Manager<HudManager>
 	#endregion
 
 	#region Callbacks to GameManager events
-	protected override void GameStatisticsChanged(GameStatisticsChangedEvent e)
-	{
-		/*List<Transform> playersScoreActiveTransform = 
-			playersScoreTransforms.FindAll(
-				item => item.gameObject.activeInHierarchy);
-		
-		List<Text> playersScore = new List<Text>();
-
-		foreach (var transform in playersScoreActiveTransform)
-			playersScore.Add(transform.GetComponentsInChildren<Text>()[1]);
-
-		if (e.ePlayerNumber != -1)
-		{
-			if(e.eScore != 0)
-				playersScore[e.ePlayerNumber - 1].text = e.eScore.ToString();
-		}
-		else
-			foreach (var score in playersScore)
-				score.text = "0";
-		
-		if (e.eBestScore != 0)
-			txtBestScore.text = e.eBestScore.ToString();
-
-        txtMonstersLeft.text = e.eNMonstersLeft.ToString();*/
-	}
-
 	private void GameHasStarted(GameHasStartedEvent e)
 	{
 		txtTime.text = GameManager.Instance.Timer.ToString();
@@ -115,15 +98,7 @@ public class HudManager : Manager<HudManager>
 			panelHUD.SetActive(false);
 		}
 	}
-	
-	protected override void GamePlay(GamePlayEvent e)
-	{
-		/*int nbPlayer = GameManager.Instance.NumberOfPlayer;
-		
-		for (int i = nbPlayer; i < 4; i++)
-			playersScoreTransforms[i].gameObject.SetActive(false);*/
-	}
-	
+
 	protected override void GameCredits(GameCreditsEvent e)
 	{
 		panelHUD.SetActive(false);

@@ -5,8 +5,4 @@
 	<SFX name="Tick" volume="1" />  
 	<SFX name="Victory" volume="1" /> 
 	<SFX name="GameOver" volume="1" />
-	<SFX name="Explosion" volume="1" />
-	<SFX name="Drop" volume="1" />
-	<SFX name="Bonus" volume="1" />
-	<SFX name="Bonus_2" volume="1" />
 </SFX_SETUP>

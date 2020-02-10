@@ -33,11 +33,6 @@ public class GameExitEvent : SDD.Events.Event
 {
 }
 
-public class GameStatisticsChangedEvent : SDD.Events.Event
-{
-    public int ePosition { get; set; }
-}
-
 #endregion
 
 #region MenuManager Events
@@ -73,6 +68,30 @@ public class CircuitThreeButtonClickedEvent : SDD.Events.Event
 {
 }
 
+public class CircuitFourButtonClickedEvent : SDD.Events.Event
+{
+}
+
+public class CircuitFiveButtonClickedEvent : SDD.Events.Event
+{
+}
+
+public class CircuitSixButtonClickedEvent : SDD.Events.Event
+{
+}
+
+public class CircuitSevenButtonClickedEvent : SDD.Events.Event
+{
+}
+
+public class CircuitEightButtonClickedEvent : SDD.Events.Event
+{
+}
+
+public class CircuitNineButtonClickedEvent : SDD.Events.Event
+{
+}
+
 public class CreditsButtonClickedEvent : SDD.Events.Event
 {
 }
@@ -93,6 +112,10 @@ public class CircuitButtonClickedEvent : SDD.Events.Event
 }
 
 public class GameHasStartedEvent : SDD.Events.Event
+{
+}
+
+public class DisplayCountdownEvent : SDD.Events.Event
 {
 }
 #endregion

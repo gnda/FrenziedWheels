@@ -11,17 +11,17 @@ namespace Spline
 {
     public class MeshGenerator {
         // Using a simple line as 2D shape for the extrusion (for now)
-        public static ExtrudeShape GenerateShapeToExtrude(int width)
+        public static ExtrudeShape GenerateShapeToExtrude(int width, float xOffset = 0)
         {
             Vertex[] verts2D = {new Vertex(
-                new Vector3(-width/2f,0,0), Vector3.up, 0)};
+                new Vector3((-width/2f) + xOffset,0,0), Vector3.up, 0)};
             int[] lines = {0};
 
             for (int i = 1, j = 1; i <= width; i++, j+=2)
             {
                 Array.Resize(ref verts2D, verts2D.Length + 1);
                 verts2D[i] = new Vertex(
-                    new Vector3(i+(-width/2f),0,0), Vector3.up ,0);
+                    new Vector3(i + (-width/2f) + xOffset,0,0), Vector3.up,0);
                 if (i < width) {
                     Array.Resize(ref lines, lines.Length + 2);
                     lines[j] = i;
@@ -50,17 +50,17 @@ namespace Spline
 
             Mesh mesh = new Mesh();
 
-            Vector3[] vertices = new Vector3[ vertCount ];
-            Vector3[] normals = new Vector3[ vertCount ];
-            Vector2[] uvs = new Vector2[ vertCount ];
+            Vector3[] vertices = new Vector3[vertCount];
+            Vector3[] normals = new Vector3[vertCount];
+            Vector2[] uvs = new Vector2[vertCount];
         
             for(int i = 0; i < path.Length; i++) {
                 int offset = i * vertsInShape;
                 for( int j = 0; j < vertsInShape; j++ ) {
                     int id = offset + j;
                     vertices[id] = path[i].LocalToWorld(shape.verts2Ds[j].point);
-                    normals[id] = path[i].LocalToWorldDirection( shape.verts2Ds[j].normal );
-                    uvs[id] = new Vector2( shape.verts2Ds[j].uCoord, i / ((float)edgeLoops) );
+                    normals[id] = path[i].LocalToWorldDirection( shape.verts2Ds[j].normal);
+                    uvs[id] = new Vector2( shape.verts2Ds[j].uCoord, i / ((float)edgeLoops));
                 }
             }
             
@@ -77,7 +77,7 @@ namespace Spline
         {
             int triCount = shape.lines.Length * segments;
             int triIndexCount = triCount * 3;
-            int[] triangleIndices = new int[ triIndexCount ];
+            int[] triangleIndices = new int[triIndexCount];
             int ti = 0;
 
             for (int i = 0; i < segments; i++)
@@ -107,9 +107,9 @@ namespace Spline
         }
         
         public static Mesh ExtrudeMeshAlongSpline(BezierSpline spline, 
-            int width, int steps = 100)
+            int width, float xOffset = 0, int steps = 100)
         {
-            ExtrudeShape shape = GenerateShapeToExtrude(width);
+            ExtrudeShape shape = GenerateShapeToExtrude(width, xOffset);
         
             // Retrieving the path from the spline and storing it in oriented points
             OrientedPoint[] path = new OrientedPoint[steps + 1];

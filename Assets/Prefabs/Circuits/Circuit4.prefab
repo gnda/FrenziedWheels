@@ -1,5 +1,96 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1664777123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1664777125}
+  - component: {fileID: 1664777124}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1664777125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664777123}
+  m_LocalRotation: {x: 0.08920601, y: 0.9083581, z: -0.25190994, w: 0.32166657}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7600878891878642303}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 31, y: 141, z: 0}
+--- !u!108 &1664777124
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664777123}
+  m_Enabled: 1
+  serializedVersion: 9
+  m_Type: 1
+  m_Color: {r: 1, g: 0.3137255, b: 0.65882355, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &40079441238473547
 GameObject:
   m_ObjectHideFlags: 0
@@ -25,7 +116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40079441238473547}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.28}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7600878891878642303}
@@ -44,21 +135,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: -0.100755036, y: 0, z: -2.6315663}
-  - {x: -0.85249245, y: 6.882065, z: 52.467327}
+  - {x: -0.100755036, y: 4.5938873, z: 0.08924294}
+  - {x: -0.100755, y: 4.593887, z: 23.299246}
   - {x: -2.255154, y: 13.272263, z: 92.23406}
   - {x: -2.255154, y: 20.154343, z: 130.8764}
   - {x: 12.779186, y: 24.277222, z: 148.7799}
-  - {x: 39.84092, y: 28.559097, z: 151.9888}
-  - {x: 69.9096, y: 35.2735, z: 156.05223}
-  - {x: 96.97133, y: 35.2735, z: 154.5488}
-  - {x: 137.56398, y: 38.021667, z: 154.90923}
-  - {x: 146.58461, y: 39.854492, z: 182.29305}
-  - {x: 146.58461, y: 39.854492, z: 230.40283}
-  - {x: 145.08113, y: 37.10565, z: 270.98337}
-  - {x: 155.60522, y: 33.720673, z: 300.38168}
-  - {x: 196.19788, y: 23.93042, z: 302.10858}
-  - {x: 232.28023, y: 10.489349, z: 303.1651}
+  - {x: 28.47139, y: 27.106606, z: 151.9888}
+  - {x: 58.54007, y: 33.821007, z: 156.05223}
+  - {x: 85.6018, y: 33.821007, z: 158.38478}
+  - {x: 112.99431, y: 33.321884, z: 166.592}
+  - {x: 145.48715, y: 35.67128, z: 181.1606}
+  - {x: 168.82619, y: 31.273537, z: 202.48177}
+  - {x: 183.81808, y: 29.625328, z: 235.7625}
+  - {x: 199.8887, y: 19.630058, z: 266.54703}
+  - {x: 230.94249, y: 6.9776993, z: 299.93948}
+  - {x: 259.11777, y: 3.340561, z: 303.1651}
   - {x: 292.41748, y: 0, z: 305.94858}
   - {x: 333.01013, y: 0, z: 305.94858}
   - {x: 352.55472, y: 0, z: 292.41766}
@@ -88,22 +179,29 @@ MonoBehaviour:
   - {x: 342.03073, y: 0, z: -130.04663}
   - {x: 342.03073, y: 0, z: -151.09468}
   - {x: 342.03073, y: 0, z: -176.65302}
-  - {x: 334.5136, y: -11.77124, z: -201.31764}
-  - {x: 298.43124, y: -24.234894, z: -200.4845}
-  - {x: 262.3489, y: -24.234894, z: -204.50352}
-  - {x: 196.19788, y: -23.542023, z: -210.66603}
-  - {x: 166.1292, y: -15.925812, z: -201.98792}
-  - {x: 143.57777, y: -5.5394287, z: -188.23361}
-  - {x: 137.56398, y: 0, z: -157.1084}
-  - {x: 140.57094, y: 0, z: -128.5432}
-  - {x: 140.57094, y: 0, z: -98.47458}
-  - {x: 133.8073, y: 0, z: -67.02459}
-  - {x: 100.52121, y: 0, z: -53.148182}
-  - {x: 57.69495, y: 0, z: -55.56016}
-  - {x: 26.67912, y: 0, z: -49.718987}
-  - {x: 11.20057, y: 0, z: -28.349863}
-  - {x: -0.100755036, y: 0, z: -2.6315663}
-  modes: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  - {x: 326.09732, y: -18.637604, z: -192.82242}
+  - {x: 298.43124, y: -24.234894, z: -204.25768}
+  - {x: 262.3489, y: -24.234894, z: -208.2767}
+  - {x: 202.02522, y: -15.608551, z: -212.23532}
+  - {x: 171.95654, y: -12.840149, z: -204.54791}
+  - {x: 158.00563, y: -6.3217926, z: -184.77705}
+  - {x: 163.16573, y: 0, z: -157.1084}
+  - {x: 174.58229, y: 0, z: -128.5432}
+  - {x: 195.84308, y: -7.4115906, z: -78.07187}
+  - {x: 199.78406, y: -10.425041, z: -45.264244}
+  - {x: 194.10242, y: -8.833069, z: -15.981564}
+  - {x: 162.55719, y: -8.833069, z: 7.0607986}
+  - {x: 126.88152, y: -5.1073303, z: -3.8778954}
+  - {x: 96.44847, y: -0.31391907, z: -33.77455}
+  - {x: 68.428734, y: 3.591446, z: -60.92404}
+  - {x: 40.3349, y: 4.3812637, z: -68.94069}
+  - {x: 27.12825, y: 5.887768, z: -70.514694}
+  - {x: 14.942446, y: 5.1769676, z: -67.542625}
+  - {x: 6.331006, y: 4.2564907, z: -59.209595}
+  - {x: -0.100755, y: 5.539299, z: -44.26849}
+  - {x: -0.100755, y: 4.593887, z: -29.377842}
+  - {x: -0.100755036, y: 4.5938873, z: 0.08924294}
+  modes: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1 &7600878891878642302
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +231,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4179657259652267999}
+  - {fileID: 1664777125}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -150,16 +249,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelBaseSpline: {fileID: 8879132396293569379}
   roadWidth: 35
-  groundWidth: 150
-  roadMaterial: {fileID: 2100000, guid: ee18013b71b78a342baad4cdfb8b295b, type: 2}
-  groundMaterial: {fileID: 2100000, guid: ccc98d4679bf8494d942a212c11fe67a, type: 2}
-  skyboxMaterial: {fileID: 2100000, guid: c3cb4ff8498f24800bed3ab4370af0ac, type: 2}
-  MaxLaps: 4
-  carPrefabs:
-  - {fileID: 100042, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 3}
-  aiCarPrefabs:
-  - {fileID: 100064, guid: 0fb4610dba67fc24cb2a6674fb155fc1, type: 3}
-  bonusPrefabs: []
+  groundWidth: 130
+  roadMaterial: {fileID: 2100000, guid: 831e67ff704691c4fb8f0bc38be6d35a, type: 2}
+  groundMaterial: {fileID: 2100000, guid: 50bda9cc17703e94bba9a8a7bec24ba4, type: 2}
+  skyboxMaterial: {fileID: 2100000, guid: 5ad4bb65494444efebde1a1327e73097, type: 2}
+  MaxLaps: 3
+  roadLinePrefab: {fileID: 4132304012056491893, guid: d19d5079357f9ef48b12581ea4c6b8bb,
+    type: 3}
   finishingLinePrefab: {fileID: 849742511374937950, guid: 7e5f18d4448439a4eaed5897d892865a,
     type: 3}
-  turnSignPrefab: {fileID: 0}
